@@ -1,5 +1,5 @@
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Habit, HabitCategory } from './types';
 import { INITIAL_HABITS } from './constants';
 import Dashboard from './components/Dashboard';
@@ -9,16 +9,37 @@ import StatsView from './components/StatsView';
 
 type Screen = 'dashboard' | 'detail' | 'create' | 'stats';
 
+const STORAGE_KEY_HABITS = 'vibehabit_habits_v1';
+const STORAGE_KEY_PROFILE = 'vibehabit_profile_v1';
+
 const App: React.FC = () => {
-  const [habits, setHabits] = useState<Habit[]>(INITIAL_HABITS);
+  // Initialize state from localStorage or defaults
+  const [habits, setHabits] = useState<Habit[]>(() => {
+    const savedHabits = localStorage.getItem(STORAGE_KEY_HABITS);
+    return savedHabits ? JSON.parse(savedHabits) : INITIAL_HABITS;
+  });
+  
+  const [profileImage, setProfileImage] = useState<string>(() => {
+    return localStorage.getItem(STORAGE_KEY_PROFILE) || "https://picsum.photos/200";
+  });
+
   const [currentScreen, setCurrentScreen] = useState<Screen>('dashboard');
   const [selectedHabitId, setSelectedHabitId] = useState<string | null>(null);
-  const [profileImage, setProfileImage] = useState<string>("https://picsum.photos/200");
   const [isCameraActive, setIsCameraActive] = useState(false);
   const [selectedDate, setSelectedDate] = useState<string>(new Date().toISOString().split('T')[0]);
   
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  // Persistence Effect: Save habits whenever they change
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEY_HABITS, JSON.stringify(habits));
+  }, [habits]);
+
+  // Persistence Effect: Save profile image whenever it changes
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEY_PROFILE, profileImage);
+  }, [profileImage]);
 
   const toggleHabitCompletion = (id: string) => {
     setHabits(prev => prev.map(habit => {
