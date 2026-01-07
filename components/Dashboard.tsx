@@ -178,11 +178,10 @@ const Dashboard: React.FC<DashboardProps> = ({
             return (
               <div 
                 key={habit.id}
-                className="group relative flex items-center justify-between p-3.5 rounded-[18px] bg-surface border border-white/5 hover:border-primary/30 transition-all cursor-pointer active:scale-[0.98]"
-                onClick={() => onHabitClick(habit.id)}
+                className="group relative flex items-center justify-between p-3.5 rounded-[18px] bg-surface border border-white/5 transition-all"
               >
                 <div className="flex items-center gap-4">
-                  <div className="size-12 rounded-[13px] bg-[#0f111a] flex items-center justify-center text-white/90 shadow-inner group-hover:scale-105 transition-transform border border-white/5">
+                  <div className="size-12 rounded-[13px] bg-[#0f111a] flex items-center justify-center text-white/90 shadow-inner transition-transform border border-white/5">
                     <span className="material-symbols-outlined text-2xl filled">{habit.category}</span>
                   </div>
                   <div className="flex flex-col">
