@@ -15,18 +15,18 @@ const App: React.FC = () => {
   const [selectedHabitId, setSelectedHabitId] = useState<string | null>(null);
   const [profileImage, setProfileImage] = useState<string>("https://picsum.photos/200");
   const [isCameraActive, setIsCameraActive] = useState(false);
+  const [selectedDate, setSelectedDate] = useState<string>(new Date().toISOString().split('T')[0]);
   
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const toggleHabitCompletion = (id: string) => {
-    const today = new Date().toISOString().split('T')[0];
     setHabits(prev => prev.map(habit => {
       if (habit.id === id) {
-        const isCompleted = habit.completedDays.includes(today);
+        const isCompleted = habit.completedDays.includes(selectedDate);
         const newCompletedDays = isCompleted 
-          ? habit.completedDays.filter(d => d !== today)
-          : [...habit.completedDays, today];
+          ? habit.completedDays.filter(d => d !== selectedDate)
+          : [...habit.completedDays, selectedDate];
         return { ...habit, completedDays: newCompletedDays };
       }
       return habit;
@@ -77,6 +77,8 @@ const App: React.FC = () => {
           <Dashboard 
             habits={habits} 
             profileImage={profileImage}
+            selectedDate={selectedDate}
+            onDateChange={setSelectedDate}
             onToggle={toggleHabitCompletion}
             onHabitClick={(id) => { setSelectedHabitId(id); setCurrentScreen('detail'); }}
             onProfileClick={startCamera}
@@ -86,6 +88,7 @@ const App: React.FC = () => {
         {currentScreen === 'detail' && selectedHabit && (
           <HabitDetail 
             habit={selectedHabit} 
+            selectedDate={selectedDate}
             onBack={() => setCurrentScreen('dashboard')}
             onToggle={() => toggleHabitCompletion(selectedHabit.id)}
           />

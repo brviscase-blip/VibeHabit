@@ -4,13 +4,17 @@ import { Habit } from '../types';
 
 interface HabitDetailProps {
   habit: Habit;
+  selectedDate: string;
   onBack: () => void;
   onToggle: () => void;
 }
 
-const HabitDetail: React.FC<HabitDetailProps> = ({ habit, onBack, onToggle }) => {
-  const today = new Date().toISOString().split('T')[0];
-  const isCompleted = habit.completedDays.includes(today);
+const HabitDetail: React.FC<HabitDetailProps> = ({ habit, selectedDate, onBack, onToggle }) => {
+  const isCompleted = habit.completedDays.includes(selectedDate);
+  const formattedDate = new Date(selectedDate + 'T12:00:00').toLocaleDateString('pt-BR', { 
+    day: 'numeric', 
+    month: 'long' 
+  });
 
   return (
     <div className="animate-fade-in flex flex-col min-h-screen pb-28">
@@ -28,7 +32,8 @@ const HabitDetail: React.FC<HabitDetailProps> = ({ habit, onBack, onToggle }) =>
           </button>
         </div>
 
-        <h1 className="text-xl font-black tracking-tight mb-2 text-white mt-7">{habit.name}</h1>
+        <h1 className="text-xl font-black tracking-tight mb-1 text-white mt-7">{habit.name}</h1>
+        <p className="text-[10px] text-text-secondary font-bold uppercase tracking-widest mb-3">{formattedDate}</p>
         
         <div className="flex items-center gap-1.5">
           <span className="px-2 py-0.5 rounded-full bg-white/5 border border-white/10 text-[7px] font-black text-text-secondary uppercase tracking-[0.2em]">

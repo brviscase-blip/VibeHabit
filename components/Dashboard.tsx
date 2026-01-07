@@ -5,15 +5,27 @@ import { Habit } from '../types';
 interface DashboardProps {
   habits: Habit[];
   profileImage: string;
+  selectedDate: string;
+  onDateChange: (date: string) => void;
   onToggle: (id: string) => void;
   onHabitClick: (id: string) => void;
   onProfileClick: () => void;
 }
 
-const Dashboard: React.FC<DashboardProps> = ({ habits, profileImage, onToggle, onHabitClick, onProfileClick }) => {
+const Dashboard: React.FC<DashboardProps> = ({ 
+  habits, 
+  profileImage, 
+  selectedDate, 
+  onDateChange, 
+  onToggle, 
+  onHabitClick, 
+  onProfileClick 
+}) => {
   const today = new Date();
   const todayStr = today.toISOString().split('T')[0];
-  const completedCount = habits.filter(h => h.completedDays.includes(todayStr)).length;
+  
+  // Calculate completed count and percentage based on selectedDate
+  const completedCount = habits.filter(h => h.completedDays.includes(selectedDate)).length;
   const totalCount = habits.length;
   const percentage = totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 0;
 
@@ -21,7 +33,7 @@ const Dashboard: React.FC<DashboardProps> = ({ habits, profileImage, onToggle, o
 
   return (
     <div className="animate-fade-in flex flex-col gap-5 pt-5">
-      {/* Header - Further reduced sizes */}
+      {/* Header */}
       <header className="flex items-center justify-between px-5">
         <div className="flex items-center gap-3.5">
           <button onClick={onProfileClick} className="relative group">
@@ -35,7 +47,7 @@ const Dashboard: React.FC<DashboardProps> = ({ habits, profileImage, onToggle, o
           </button>
           <div className="flex flex-col">
             <span className="text-text-secondary text-[10px] font-bold uppercase tracking-[0.2em] mb-0.5 opacity-70">
-              {today.toLocaleDateString('pt-BR', { weekday: 'short', month: 'short', day: 'numeric' }).toUpperCase()}
+              {new Date(selectedDate + 'T12:00:00').toLocaleDateString('pt-BR', { weekday: 'short', month: 'short', day: 'numeric' }).toUpperCase()}
             </span>
             <h2 className="text-xl font-extrabold text-white tracking-tight leading-none">Olá, Alex</h2>
           </div>
@@ -55,32 +67,53 @@ const Dashboard: React.FC<DashboardProps> = ({ habits, profileImage, onToggle, o
       <div className="px-5">
         <div className="flex justify-between items-center mb-4">
           <h3 className="font-bold text-base text-white tracking-tight">Semana de Foco</h3>
-          <div className="px-2.5 py-0.5 bg-primary/10 rounded-full border border-primary/20 text-[9px] font-black text-primary uppercase tracking-widest">HOJE</div>
+          <div className="flex gap-2">
+             {selectedDate !== todayStr && (
+               <button 
+                 onClick={() => onDateChange(todayStr)}
+                 className="px-2.5 py-0.5 bg-white/5 rounded-full border border-white/10 text-[9px] font-black text-text-secondary uppercase tracking-widest hover:text-white transition-colors"
+               >
+                 VOLTAR PARA HOJE
+               </button>
+             )}
+             <div className="px-2.5 py-0.5 bg-primary/10 rounded-full border border-primary/20 text-[9px] font-black text-primary uppercase tracking-widest">
+               {selectedDate === todayStr ? 'HOJE' : 'HISTÓRICO'}
+             </div>
+          </div>
         </div>
         <div className="flex justify-between items-start">
           {weekDays.map((day, idx) => {
             const date = new Date();
             const diff = idx - today.getDay();
             date.setDate(today.getDate() + diff);
-            const isToday = idx === today.getDay();
-            const isCompleted = idx < today.getDay() || (isToday && percentage >= 100);
+            const dateStr = date.toISOString().split('T')[0];
+            
+            const isToday = dateStr === todayStr;
+            const isSelected = dateStr === selectedDate;
+            const isDone = habits.every(h => h.completedDays.includes(dateStr)) && totalCount > 0;
+            const hasProgress = habits.some(h => h.completedDays.includes(dateStr));
             
             return (
               <div key={idx} className="flex flex-col items-center">
-                <span className={`text-[10px] font-black tracking-tighter mb-3.5 ${isToday ? 'text-primary' : 'text-text-secondary/40'}`}>
+                <span className={`text-[10px] font-black tracking-tighter mb-3.5 transition-colors ${isSelected ? 'text-primary' : 'text-text-secondary/40'}`}>
                   {day}
                 </span>
                 <div className="flex flex-col items-center">
-                  <button className={`size-9 rounded-full flex items-center justify-center text-xs font-black transition-all border ${
-                    isToday 
-                    ? 'bg-gradient-primary border-transparent text-white shadow-[0_0_12px_rgba(233,30,99,0.4)] scale-110 z-10' 
-                    : 'bg-surface border-white/5 text-text-secondary'
-                  }`}>
+                  <button 
+                    onClick={() => onDateChange(dateStr)}
+                    className={`size-9 rounded-full flex items-center justify-center text-xs font-black transition-all border ${
+                      isSelected 
+                      ? 'bg-gradient-primary border-transparent text-white shadow-[0_0_12px_rgba(233,30,99,0.4)] scale-110 z-10' 
+                      : isToday 
+                        ? 'bg-surface border-primary/40 text-text-secondary'
+                        : 'bg-surface border-white/5 text-text-secondary hover:border-white/20'
+                    }`}
+                  >
                     {date.getDate()}
                   </button>
                   <div className="h-3.5 flex items-center justify-center mt-1">
-                    {isCompleted && (
-                      <div className="size-1 bg-primary/80 rounded-full shadow-[0_0_4px_rgba(233,30,99,0.6)]"></div>
+                    {hasProgress && (
+                      <div className={`size-1 rounded-full shadow-[0_0_4px_rgba(233,30,99,0.6)] ${isDone ? 'bg-accent' : 'bg-primary/80'}`}></div>
                     )}
                   </div>
                 </div>
@@ -102,7 +135,8 @@ const Dashboard: React.FC<DashboardProps> = ({ habits, profileImage, onToggle, o
               {percentage}% <span className="text-lg opacity-50 font-medium tracking-normal">Completo</span>
             </h3>
             <p className="text-text-secondary text-xs font-medium mt-0.5">
-              Você completou <span className="text-white font-bold">{completedCount} de {totalCount} metas</span> hoje.
+              {selectedDate === todayStr ? 'Hoje você completou ' : 'Neste dia você completou '}
+              <span className="text-white font-bold">{completedCount} de {totalCount} metas</span>.
             </p>
           </div>
           
@@ -135,12 +169,12 @@ const Dashboard: React.FC<DashboardProps> = ({ habits, profileImage, onToggle, o
       {/* Habit List */}
       <div className="px-5 flex flex-col gap-3.5 pb-8">
         <div className="flex items-center justify-between">
-          <h3 className="text-base font-bold text-white tracking-tight">Missões Atuais</h3>
+          <h3 className="text-base font-bold text-white tracking-tight">Missões {selectedDate === todayStr ? 'Atuais' : 'do Dia'}</h3>
           <button className="text-[9px] font-black text-primary uppercase tracking-[0.15em] px-2.5 py-1 bg-primary/5 rounded-[6px] border border-primary/10">GERENCIAR</button>
         </div>
         <div className="flex flex-col gap-2.5">
           {habits.map((habit) => {
-            const isCompleted = habit.completedDays.includes(todayStr);
+            const isCompleted = habit.completedDays.includes(selectedDate);
             return (
               <div 
                 key={habit.id}
