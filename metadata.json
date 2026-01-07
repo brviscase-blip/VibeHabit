@@ -1,0 +1,7 @@
+{
+  "name": "VibeHabit AI",
+  "description": "A visually stunning habit tracker with AI-powered insights, progress analytics, and a vibrant aesthetic design.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
