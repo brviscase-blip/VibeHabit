@@ -1,29 +1,47 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Habit, HabitCategory } from '../types';
 
 interface CreateHabitProps {
+  editingHabit?: Habit | null;
   onBack: () => void;
   onSave: (habit: Habit) => void;
 }
 
-const CreateHabit: React.FC<CreateHabitProps> = ({ onBack, onSave }) => {
+const CATEGORY_CONFIG = [
+  { cat: HabitCategory.FITNESS, label: 'Corpo', color: '#e91e63' },
+  { cat: HabitCategory.READING, label: 'Mente', color: '#2196f3' },
+  { cat: HabitCategory.WATER, label: 'Saúde', color: '#00bcd4' },
+  { cat: HabitCategory.MEDITATION, label: 'Foco', color: '#9c27b0' },
+  { cat: HabitCategory.SLEEP, label: 'Descanso', color: '#ffeb3b' },
+];
+
+const CreateHabit: React.FC<CreateHabitProps> = ({ editingHabit, onBack, onSave }) => {
   const [name, setName] = useState('');
-  const [desc, setDesc] = useState('');
   const [goal, setGoal] = useState('');
   const [freq, setFreq] = useState<'diário' | 'semanal' | 'mensal'>('diário');
-  const [cat, setCat] = useState<HabitCategory>(HabitCategory.FITNESS);
+  const [selectedCat, setSelectedCat] = useState(HabitCategory.FITNESS);
+
+  useEffect(() => {
+    if (editingHabit) {
+      setName(editingHabit.name);
+      setGoal(editingHabit.goal);
+      setFreq(editingHabit.frequency);
+      setSelectedCat(editingHabit.category);
+    }
+  }, [editingHabit]);
 
   const handleSave = () => {
     if (!name) return;
+    const config = CATEGORY_CONFIG.find(c => c.cat === selectedCat);
     const newHabit: Habit = {
-      id: Math.random().toString(36).substr(2, 9),
+      id: editingHabit?.id || Math.random().toString(36).substr(2, 9),
       name,
-      description: desc,
-      category: cat,
-      goal: goal || 'Meta batida',
-      completedDays: [],
-      color: 'primary',
+      description: editingHabit?.description || '',
+      category: selectedCat,
+      goal: goal || 'Diário',
+      completedDays: editingHabit?.completedDays || [],
+      color: config?.color || '#e91e63',
       frequency: freq,
     };
     onSave(newHabit);
@@ -31,119 +49,84 @@ const CreateHabit: React.FC<CreateHabitProps> = ({ onBack, onSave }) => {
 
   return (
     <div className="animate-fade-in flex flex-col min-h-[calc(100vh-80px)]">
-      {/* Header Fixo Simples */}
-      <header className="px-5 py-6 flex items-center justify-between">
+      <header className="px-6 py-8 flex items-center justify-between">
         <button 
           onClick={onBack} 
-          className="flex items-center justify-center size-10 rounded-xl bg-surface border border-white/5 active:scale-90 transition-all"
+          className="size-10 rounded-full bg-surface border border-white/5 flex items-center justify-center active:scale-90 transition-transform"
         >
-          <span className="material-symbols-outlined text-white">close</span>
+          <span className="material-symbols-outlined text-white text-xl">close</span>
         </button>
-        <h1 className="text-lg font-black tracking-tight text-white uppercase tracking-[0.05em]">Novo Hábito</h1>
-        <div className="size-10"></div> {/* Spacer para centralizar o título */}
+        <h1 className="text-sm font-black text-white uppercase tracking-[0.3em]">
+          {editingHabit ? 'Editar Hábito' : 'Criar Hábito'}
+        </h1>
+        <div className="size-10"></div>
       </header>
 
-      <div className="flex-1 px-5 pb-10 space-y-8">
-        
-        {/* Seção 1: Identidade */}
-        <section className="space-y-4">
-          <div className="flex items-center gap-2 mb-1">
-            <span className="material-symbols-outlined text-primary text-sm filled">label</span>
-            <h2 className="text-[10px] font-black text-text-secondary uppercase tracking-[0.2em]">Identidade</h2>
-          </div>
-          
+      <div className="px-6 space-y-10 pb-12">
+        <div className="space-y-4">
+          <label className="block text-[10px] font-black text-text-secondary uppercase tracking-[0.2em] ml-1">O que vamos cultivar?</label>
           <div className="space-y-3">
-            <div className="relative group">
-              <input 
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                className="w-full bg-[#121420] border border-white/5 focus:border-primary/50 rounded-[14px] py-4 px-4 text-sm font-bold text-white placeholder:text-white/20 focus:ring-4 focus:ring-primary/5 transition-all outline-none" 
-                placeholder="O que você quer cultivar?" 
-                type="text"
-              />
-            </div>
-            
-            <textarea 
-              value={desc}
-              onChange={(e) => setDesc(e.target.value)}
-              className="w-full bg-[#121420] border border-white/5 focus:border-primary/50 rounded-[14px] p-4 text-xs font-medium text-white placeholder:text-white/20 focus:ring-4 focus:ring-primary/5 transition-all outline-none resize-none min-h-[90px]" 
-              placeholder="Descreva o 'porquê' por trás deste hábito..."
-            ></textarea>
+            <input 
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="w-full bg-surface border border-white/5 focus:border-primary/40 rounded-2xl py-5 px-6 text-base font-bold text-white placeholder:text-white/20 outline-none transition-all" 
+              placeholder="Ex: Meditação Matinal" 
+            />
+            <input 
+              value={goal}
+              onChange={(e) => setGoal(e.target.value)}
+              className="w-full bg-surface border border-white/5 focus:border-primary/40 rounded-2xl py-5 px-6 text-base font-bold text-white placeholder:text-white/20 outline-none transition-all" 
+              placeholder="Meta (ex: 15 min)" 
+            />
           </div>
-        </section>
+        </div>
 
-        {/* Seção 2: Ritmo e Meta */}
-        <section className="space-y-4">
-          <div className="flex items-center gap-2 mb-1">
-            <span className="material-symbols-outlined text-accent text-sm filled">rebase_edit</span>
-            <h2 className="text-[10px] font-black text-text-secondary uppercase tracking-[0.2em]">Ritmo</h2>
-          </div>
-
-          <div className="grid grid-cols-3 gap-2 bg-[#121420] p-1.5 rounded-[16px] border border-white/5">
+        <div className="space-y-4">
+          <label className="block text-[10px] font-black text-text-secondary uppercase tracking-[0.2em] ml-1">Frequência</label>
+          <div className="grid grid-cols-3 gap-2 bg-surface p-1.5 rounded-2xl border border-white/5">
             {(['diário', 'semanal', 'mensal'] as const).map(f => (
               <button 
                 key={f}
                 onClick={() => setFreq(f)}
-                className={`py-2.5 rounded-[12px] font-black text-[9px] uppercase tracking-widest transition-all ${
-                  freq === f 
-                  ? 'bg-gradient-primary text-white shadow-lg shadow-primary/20' 
-                  : 'text-text-secondary/60 hover:text-text-secondary'
+                className={`py-3 rounded-xl font-black text-[10px] uppercase tracking-widest transition-all ${
+                  freq === f ? 'bg-gradient-primary text-white shadow-lg shadow-primary/20' : 'text-text-secondary/50'
                 }`}
               >
                 {f}
               </button>
             ))}
           </div>
+        </div>
 
-          <div className="relative group">
-            <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
-              <span className="material-symbols-outlined text-primary/40 text-lg filled">target</span>
-            </div>
-            <input 
-              value={goal}
-              onChange={(e) => setGoal(e.target.value)}
-              className="w-full bg-[#121420] border border-white/5 focus:border-primary/50 rounded-[14px] py-4 pl-11 pr-4 text-sm font-bold text-white placeholder:text-white/20 focus:ring-4 focus:ring-primary/5 transition-all outline-none" 
-              placeholder="Ex: 30 minutos, 2 litros..." 
-              type="text"
-            />
-          </div>
-        </section>
-
-        {/* Seção 3: Categoria e Estilo */}
-        <section className="space-y-4">
-          <div className="flex items-center gap-2 mb-1">
-            <span className="material-symbols-outlined text-purple-400 text-sm filled">palette</span>
-            <h2 className="text-[10px] font-black text-text-secondary uppercase tracking-[0.2em]">Visual</h2>
-          </div>
-          
-          <div className="grid grid-cols-4 gap-3">
-            {Object.values(HabitCategory).map(c => (
+        <div className="space-y-4">
+          <label className="block text-[10px] font-black text-text-secondary uppercase tracking-[0.2em] ml-1">Vibe do Hábito</label>
+          <div className="grid grid-cols-5 gap-3">
+            {CATEGORY_CONFIG.map(({ cat, label, color }) => (
               <button 
-                key={c}
-                onClick={() => setCat(c)}
-                className={`aspect-square rounded-[18px] flex flex-col items-center justify-center gap-2 transition-all duration-300 border ${
-                  cat === c 
-                  ? 'bg-gradient-primary border-transparent shadow-xl shadow-primary/20 scale-105' 
-                  : 'bg-[#121420] border-white/5 text-text-secondary/40 hover:border-white/20 hover:text-text-secondary'
-                }`}
+                key={cat}
+                onClick={() => setSelectedCat(cat)}
+                className={`flex flex-col items-center gap-3 transition-all duration-300 ${selectedCat === cat ? 'scale-110' : 'opacity-30 grayscale'}`}
               >
-                <span className={`material-symbols-outlined text-2xl ${cat === c ? 'filled text-white' : ''}`}>{c}</span>
+                <div 
+                  className="size-12 rounded-2xl flex items-center justify-center shadow-lg"
+                  style={{ backgroundColor: color }}
+                >
+                  <span className="material-symbols-outlined text-white text-xl filled">{cat}</span>
+                </div>
+                <span className="text-[8px] font-black text-white uppercase tracking-widest">{label}</span>
               </button>
             ))}
           </div>
-        </section>
+        </div>
 
-        {/* Botão de Ação Principal */}
-        <div className="pt-6">
+        <div className="pt-4">
           <button 
             onClick={handleSave}
             disabled={!name}
-            className="w-full bg-gradient-primary disabled:opacity-50 disabled:grayscale text-white font-black text-xs uppercase tracking-[0.2em] py-5 rounded-[18px] shadow-2xl shadow-primary/40 hover:brightness-110 active:scale-[0.97] transition-all flex items-center justify-center gap-3"
+            className="w-full bg-gradient-primary disabled:opacity-30 text-white font-black text-xs uppercase tracking-[0.3em] py-6 rounded-[24px] shadow-2xl shadow-primary/30 hover:brightness-110 active:scale-[0.98] transition-all"
           >
-            <span>Gerar Hábito</span>
-            <span className="material-symbols-outlined text-xl filled">magic_button</span>
+            {editingHabit ? 'Atualizar Hábito' : 'Iniciar Jornada'}
           </button>
-          <p className="text-center text-[8px] text-text-secondary/40 mt-4 uppercase font-bold tracking-[0.1em]">Você poderá editar estas configurações a qualquer momento</p>
         </div>
       </div>
     </div>

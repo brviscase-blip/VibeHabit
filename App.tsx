@@ -6,14 +6,14 @@ import Dashboard from './components/Dashboard';
 import HabitDetail from './components/HabitDetail';
 import CreateHabit from './components/CreateHabit';
 import StatsView from './components/StatsView';
+import HabitsManager from './components/HabitsManager';
 
-type Screen = 'dashboard' | 'detail' | 'create' | 'stats';
+type Screen = 'dashboard' | 'detail' | 'create' | 'stats' | 'manage_habits';
 
 const STORAGE_KEY_HABITS = 'vibehabit_habits_v1';
 const STORAGE_KEY_PROFILE = 'vibehabit_profile_v1';
 
 const App: React.FC = () => {
-  // Initialize state from localStorage or defaults
   const [habits, setHabits] = useState<Habit[]>(() => {
     const savedHabits = localStorage.getItem(STORAGE_KEY_HABITS);
     return savedHabits ? JSON.parse(savedHabits) : INITIAL_HABITS;
@@ -25,18 +25,17 @@ const App: React.FC = () => {
 
   const [currentScreen, setCurrentScreen] = useState<Screen>('dashboard');
   const [selectedHabitId, setSelectedHabitId] = useState<string | null>(null);
+  const [editingHabit, setEditingHabit] = useState<Habit | null>(null);
   const [isCameraActive, setIsCameraActive] = useState(false);
   const [selectedDate, setSelectedDate] = useState<string>(new Date().toISOString().split('T')[0]);
   
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  // Persistence Effect: Save habits whenever they change
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY_HABITS, JSON.stringify(habits));
   }, [habits]);
 
-  // Persistence Effect: Save profile image whenever it changes
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY_PROFILE, profileImage);
   }, [profileImage]);
@@ -52,6 +51,25 @@ const App: React.FC = () => {
       }
       return habit;
     }));
+  };
+
+  const deleteHabit = (id: string) => {
+    setHabits(prev => prev.filter(h => h.id !== id));
+  };
+
+  const saveHabit = (habit: Habit) => {
+    if (editingHabit) {
+      setHabits(prev => prev.map(h => h.id === habit.id ? habit : h));
+      setEditingHabit(null);
+    } else {
+      setHabits(prev => [...prev, habit]);
+    }
+    setCurrentScreen('dashboard');
+  };
+
+  const startEdit = (habit: Habit) => {
+    setEditingHabit(habit);
+    setCurrentScreen('create');
   };
 
   const startCamera = async () => {
@@ -106,6 +124,15 @@ const App: React.FC = () => {
           />
         )}
 
+        {currentScreen === 'manage_habits' && (
+          <HabitsManager 
+            habits={habits}
+            onBack={() => setCurrentScreen('dashboard')}
+            onEdit={startEdit}
+            onDelete={deleteHabit}
+          />
+        )}
+
         {currentScreen === 'detail' && selectedHabit && (
           <HabitDetail 
             habit={selectedHabit} 
@@ -117,11 +144,12 @@ const App: React.FC = () => {
 
         {currentScreen === 'create' && (
           <CreateHabit 
-            onBack={() => setCurrentScreen('dashboard')}
-            onSave={(newHabit) => {
-              setHabits([...habits, newHabit]);
+            editingHabit={editingHabit}
+            onBack={() => {
+              setEditingHabit(null);
               setCurrentScreen('dashboard');
             }}
+            onSave={saveHabit}
           />
         )}
 
@@ -154,39 +182,45 @@ const App: React.FC = () => {
         )}
 
         <nav className="fixed bottom-0 left-0 right-0 w-full max-w-xl mx-auto bg-[#0f111a]/95 backdrop-blur-2xl border-t border-white/5 px-4 pb-6 pt-3 z-50">
-          <div className="flex justify-center items-center gap-x-6">
+          <div className="flex justify-around items-center">
             <button 
               onClick={() => setCurrentScreen('dashboard')}
-              className={`flex flex-col items-center min-w-[50px] transition-all ${currentScreen === 'dashboard' ? 'text-primary' : 'text-text-secondary'}`}
+              className={`flex flex-col items-center transition-all ${currentScreen === 'dashboard' ? 'text-primary' : 'text-text-secondary'}`}
             >
-              <span className={`material-symbols-outlined text-[24px] ${currentScreen === 'dashboard' ? 'filled scale-110 drop-shadow-[0_0_8px_rgba(233,30,99,0.3)]' : ''}`}>home</span>
-              <span className="text-[9px] mt-1 font-bold uppercase tracking-widest">Home</span>
+              <span className={`material-symbols-outlined text-[24px] ${currentScreen === 'dashboard' ? 'filled' : ''}`}>home</span>
+              <span className="text-[8px] mt-1 font-black uppercase tracking-widest">Home</span>
+            </button>
+
+            <button 
+              onClick={() => setCurrentScreen('manage_habits')}
+              className={`flex flex-col items-center transition-all ${currentScreen === 'manage_habits' ? 'text-primary' : 'text-text-secondary'}`}
+            >
+              <span className={`material-symbols-outlined text-[24px] ${currentScreen === 'manage_habits' ? 'filled' : ''}`}>format_list_bulleted</span>
+              <span className="text-[8px] mt-1 font-black uppercase tracking-widest">Lista</span>
             </button>
             
-            {/* Placeholder Slot 1 */}
-            <div className="flex flex-col items-center min-w-[50px] opacity-20">
-              <div className="size-6 border-2 border-dashed border-text-secondary rounded-md"></div>
-              <div className="h-2 w-8 bg-text-secondary/50 rounded-full mt-2"></div>
-            </div>
-            
             <button 
-              onClick={() => setCurrentScreen('create')}
-              className="flex items-center justify-center size-12 rounded-xl bg-gradient-primary text-white shadow-[0_4px_16px_rgba(233,30,99,0.3)] active:scale-90 transition-all border-2 border-white/10"
+              onClick={() => { setEditingHabit(null); setCurrentScreen('create'); }}
+              className="flex items-center justify-center size-12 rounded-2xl bg-gradient-primary text-white shadow-lg active:scale-90 transition-all border border-white/10"
             >
               <span className="material-symbols-outlined text-2xl font-bold">add</span>
             </button>
             
-            {/* Placeholder Slot 2 */}
-            <div className="flex flex-col items-center min-w-[50px] opacity-20">
-              <div className="size-6 border-2 border-dashed border-text-secondary rounded-md"></div>
-              <div className="h-2 w-8 bg-text-secondary/50 rounded-full mt-2"></div>
-            </div>
+            <button 
+              onClick={() => setCurrentScreen('stats')}
+              className={`flex flex-col items-center transition-all ${currentScreen === 'stats' ? 'text-primary' : 'text-text-secondary'}`}
+            >
+              <span className={`material-symbols-outlined text-[24px] ${currentScreen === 'stats' ? 'filled' : ''}`}>analytics</span>
+              <span className="text-[8px] mt-1 font-black uppercase tracking-widest">Stats</span>
+            </button>
 
-            {/* Placeholder Slot 3 */}
-            <div className="flex flex-col items-center min-w-[50px] opacity-20">
-              <div className="size-6 border-2 border-dashed border-text-secondary rounded-md"></div>
-              <div className="h-2 w-8 bg-text-secondary/50 rounded-full mt-2"></div>
-            </div>
+            <button 
+              className="flex flex-col items-center text-text-secondary opacity-50"
+              disabled
+            >
+              <span className="material-symbols-outlined text-[24px]">settings</span>
+              <span className="text-[8px] mt-1 font-black uppercase tracking-widest">Ajustes</span>
+            </button>
           </div>
         </nav>
       </div>
