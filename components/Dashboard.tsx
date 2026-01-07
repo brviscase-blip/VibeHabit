@@ -49,7 +49,7 @@ const Dashboard: React.FC<DashboardProps> = ({
             <span className="text-text-secondary text-[10px] font-bold uppercase tracking-[0.2em] mb-0.5 opacity-70">
               {new Date(selectedDate + 'T12:00:00').toLocaleDateString('pt-BR', { weekday: 'short', month: 'short', day: 'numeric' }).toUpperCase()}
             </span>
-            <h2 className="text-xl font-extrabold text-white tracking-tight leading-none">Olá, Alex</h2>
+            <h2 className="text-xl font-extrabold text-white tracking-tight leading-none">Olá, Rafael</h2>
           </div>
         </div>
         <div className="flex gap-2">
