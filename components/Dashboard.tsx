@@ -21,42 +21,42 @@ const Dashboard: React.FC<DashboardProps> = ({ habits, profileImage, onToggle, o
   const weekDays = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'];
 
   return (
-    <div className="animate-fade-in flex flex-col gap-8 pt-6">
-      {/* Header */}
-      <header className="flex items-center justify-between px-8">
-        <div className="flex items-center gap-5">
+    <div className="animate-fade-in flex flex-col gap-6 pt-6">
+      {/* Header - Reduced padding and sizes */}
+      <header className="flex items-center justify-between px-6">
+        <div className="flex items-center gap-4">
           <button onClick={onProfileClick} className="relative group">
             <div 
-              className="bg-center bg-no-repeat bg-cover rounded-[20px] size-16 ring-2 ring-white/5 group-hover:ring-primary/50 transition-all duration-300 shadow-xl"
+              className="bg-center bg-no-repeat bg-cover rounded-[16px] size-14 ring-2 ring-white/5 group-hover:ring-primary/50 transition-all duration-300 shadow-xl"
               style={{ backgroundImage: `url("${profileImage}")` }}
             ></div>
-            <div className="absolute -bottom-1 -right-1 size-6 bg-gradient-primary rounded-full border-2 border-[#0f111a] flex items-center justify-center">
-              <span className="material-symbols-outlined text-[12px] text-white font-bold">photo_camera</span>
+            <div className="absolute -bottom-1 -right-1 size-5 bg-gradient-primary rounded-full border-2 border-[#0f111a] flex items-center justify-center">
+              <span className="material-symbols-outlined text-[10px] text-white font-bold">photo_camera</span>
             </div>
           </button>
           <div className="flex flex-col">
-            <span className="text-text-secondary text-[12px] font-bold uppercase tracking-[0.2em] mb-1 opacity-70">
+            <span className="text-text-secondary text-[11px] font-bold uppercase tracking-[0.2em] mb-0.5 opacity-70">
               {today.toLocaleDateString('pt-BR', { weekday: 'short', month: 'short', day: 'numeric' }).toUpperCase()}
             </span>
-            <h2 className="text-3xl font-extrabold text-white tracking-tight leading-none">Olá, Alex</h2>
+            <h2 className="text-2xl font-extrabold text-white tracking-tight leading-none">Olá, Alex</h2>
           </div>
         </div>
-        <div className="flex gap-3">
-          <button className="flex items-center justify-center size-12 rounded-2xl bg-surface border border-white/5 text-white/80 hover:bg-surface-light transition-all">
-            <span className="material-symbols-outlined text-2xl">search</span>
+        <div className="flex gap-2">
+          <button className="flex items-center justify-center size-10 rounded-xl bg-surface border border-white/5 text-white/80 hover:bg-surface-light transition-all">
+            <span className="material-symbols-outlined text-xl">search</span>
           </button>
-          <button className="flex items-center justify-center size-12 rounded-2xl bg-surface border border-white/5 text-white/80 hover:bg-surface-light transition-all relative">
-            <span className="material-symbols-outlined text-2xl">notifications</span>
-            <span className="absolute top-3.5 right-3.5 size-2.5 bg-primary rounded-full shadow-[0_0_10px_rgba(233,30,99,0.8)]"></span>
+          <button className="flex items-center justify-center size-10 rounded-xl bg-surface border border-white/5 text-white/80 hover:bg-surface-light transition-all relative">
+            <span className="material-symbols-outlined text-xl">notifications</span>
+            <span className="absolute top-2.5 right-2.5 size-2 bg-primary rounded-full shadow-[0_0_8px_rgba(233,30,99,0.8)]"></span>
           </button>
         </div>
       </header>
 
-      {/* Week View */}
-      <div className="px-8">
-        <div className="flex justify-between items-center mb-6">
-          <h3 className="font-bold text-xl text-white tracking-tight">Semana de Foco</h3>
-          <div className="px-4 py-1.5 bg-primary/10 rounded-full border border-primary/20 text-[11px] font-black text-primary uppercase tracking-widest">HOJE</div>
+      {/* Week View - Reduced spacing */}
+      <div className="px-6">
+        <div className="flex justify-between items-center mb-5">
+          <h3 className="font-bold text-lg text-white tracking-tight">Semana de Foco</h3>
+          <div className="px-3 py-1 bg-primary/10 rounded-full border border-primary/20 text-[10px] font-black text-primary uppercase tracking-widest">HOJE</div>
         </div>
         <div className="flex justify-between items-start">
           {weekDays.map((day, idx) => {
@@ -68,20 +68,20 @@ const Dashboard: React.FC<DashboardProps> = ({ habits, profileImage, onToggle, o
             
             return (
               <div key={idx} className="flex flex-col items-center">
-                <span className={`text-[12px] font-black tracking-tighter mb-5 ${isToday ? 'text-primary' : 'text-text-secondary/40'}`}>
+                <span className={`text-[11px] font-black tracking-tighter mb-4 ${isToday ? 'text-primary' : 'text-text-secondary/40'}`}>
                   {day}
                 </span>
                 <div className="flex flex-col items-center">
-                  <button className={`size-12 rounded-full flex items-center justify-center text-base font-black transition-all border ${
+                  <button className={`size-10 rounded-full flex items-center justify-center text-sm font-black transition-all border ${
                     isToday 
-                    ? 'bg-gradient-primary border-transparent text-white shadow-[0_0_20px_rgba(233,30,99,0.4)] scale-110 z-10' 
+                    ? 'bg-gradient-primary border-transparent text-white shadow-[0_0_15px_rgba(233,30,99,0.4)] scale-110 z-10' 
                     : 'bg-surface border-white/5 text-text-secondary'
                   }`}>
                     {date.getDate()}
                   </button>
-                  <div className="h-5 flex items-center justify-center mt-1.5">
+                  <div className="h-4 flex items-center justify-center mt-1">
                     {isCompleted && (
-                      <div className="size-1.5 bg-primary/80 rounded-full shadow-[0_0_6px_rgba(233,30,99,0.6)]"></div>
+                      <div className="size-1 bg-primary/80 rounded-full shadow-[0_0_4px_rgba(233,30,99,0.6)]"></div>
                     )}
                   </div>
                 </div>
@@ -91,23 +91,23 @@ const Dashboard: React.FC<DashboardProps> = ({ habits, profileImage, onToggle, o
         </div>
       </div>
 
-      {/* Main Stats Card */}
-      <div className="px-8">
-        <div className="relative overflow-hidden rounded-[40px] bg-surface border border-white/5 shadow-2xl p-8 flex items-center justify-between group">
-          <div className="absolute top-0 right-0 size-64 bg-primary/10 blur-[80px] rounded-full translate-x-12 -translate-y-12"></div>
-          <div className="flex flex-col gap-3 z-10">
-            <div className="flex items-center gap-2 mb-1">
-              <span className="px-3 py-1 rounded-xl bg-accent/20 text-accent text-[10px] font-black uppercase tracking-[0.25em]">Pulso Real</span>
+      {/* Main Stats Card - Reduced padding and text */}
+      <div className="px-6">
+        <div className="relative overflow-hidden rounded-[32px] bg-surface border border-white/5 shadow-2xl p-6 flex items-center justify-between group">
+          <div className="absolute top-0 right-0 size-56 bg-primary/10 blur-[70px] rounded-full translate-x-12 -translate-y-12"></div>
+          <div className="flex flex-col gap-2 z-10">
+            <div className="flex items-center gap-2">
+              <span className="px-2.5 py-0.5 rounded-lg bg-accent/20 text-accent text-[9px] font-black uppercase tracking-[0.2em]">Pulso Real</span>
             </div>
-            <h3 className="text-white text-4xl font-black leading-none tracking-tight">
-              {percentage}% <span className="text-2xl opacity-50 font-medium tracking-normal">Completo</span>
+            <h3 className="text-white text-3xl font-black leading-none tracking-tight">
+              {percentage}% <span className="text-xl opacity-50 font-medium tracking-normal">Completo</span>
             </h3>
-            <p className="text-text-secondary text-base font-medium mt-1">
+            <p className="text-text-secondary text-sm font-medium mt-0.5">
               Você completou <span className="text-white font-bold">{completedCount} de {totalCount} metas</span> hoje.
             </p>
           </div>
           
-          <div className="relative size-28 shrink-0 group-hover:scale-110 transition-transform duration-500">
+          <div className="relative size-24 shrink-0 group-hover:scale-110 transition-transform duration-500">
             <svg className="size-full -rotate-90 drop-shadow-2xl" viewBox="0 0 36 36">
               <circle cx="18" cy="18" r="16" fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="3" />
               <circle 
@@ -127,37 +127,37 @@ const Dashboard: React.FC<DashboardProps> = ({ habits, profileImage, onToggle, o
               </defs>
             </svg>
             <div className="absolute inset-0 flex items-center justify-center">
-              <span className="material-symbols-outlined text-primary text-3xl filled animate-pulse">bolt</span>
+              <span className="material-symbols-outlined text-primary text-2xl filled animate-pulse">bolt</span>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Habit List */}
-      <div className="px-8 flex flex-col gap-5 pb-10">
-        <div className="flex items-center justify-between mb-1">
-          <h3 className="text-xl font-bold text-white tracking-tight">Missões Atuais</h3>
-          <button className="text-[11px] font-black text-primary uppercase tracking-[0.2em] px-3 py-1.5 bg-primary/5 rounded-xl border border-primary/10">GERENCIAR</button>
+      {/* Habit List - Reduced item padding and icon size */}
+      <div className="px-6 flex flex-col gap-4 pb-10">
+        <div className="flex items-center justify-between">
+          <h3 className="text-lg font-bold text-white tracking-tight">Missões Atuais</h3>
+          <button className="text-[10px] font-black text-primary uppercase tracking-[0.15em] px-3 py-1 bg-primary/5 rounded-lg border border-primary/10">GERENCIAR</button>
         </div>
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-3">
           {habits.map((habit) => {
             const isCompleted = habit.completedDays.includes(todayStr);
             return (
               <div 
                 key={habit.id}
-                className="group relative flex items-center justify-between p-5 rounded-[28px] bg-surface border border-white/5 hover:border-primary/30 transition-all cursor-pointer active:scale-[0.98]"
+                className="group relative flex items-center justify-between p-4 rounded-[24px] bg-surface border border-white/5 hover:border-primary/30 transition-all cursor-pointer active:scale-[0.98]"
                 onClick={() => onHabitClick(habit.id)}
               >
-                <div className="flex items-center gap-6">
-                  <div className="size-16 rounded-[22px] bg-[#0f111a] flex items-center justify-center text-white/90 shadow-inner group-hover:scale-105 transition-transform border border-white/5">
-                    <span className="material-symbols-outlined text-4xl filled">{habit.category}</span>
+                <div className="flex items-center gap-5">
+                  <div className="size-14 rounded-[18px] bg-[#0f111a] flex items-center justify-center text-white/90 shadow-inner group-hover:scale-105 transition-transform border border-white/5">
+                    <span className="material-symbols-outlined text-3xl filled">{habit.category}</span>
                   </div>
                   <div className="flex flex-col">
-                    <span className={`text-lg font-bold tracking-tight text-white transition-all ${isCompleted ? 'opacity-30 line-through' : ''}`}>
+                    <span className={`text-base font-bold tracking-tight text-white transition-all ${isCompleted ? 'opacity-30 line-through' : ''}`}>
                       {habit.name}
                     </span>
-                    <span className="text-sm text-text-secondary font-medium tracking-wide flex items-center gap-2 mt-0.5">
-                      <span className="size-2 rounded-full bg-accent"></span>
+                    <span className="text-xs text-text-secondary font-medium tracking-wide flex items-center gap-1.5 mt-0.5">
+                      <span className="size-1.5 rounded-full bg-accent"></span>
                       {habit.goal}
                     </span>
                   </div>
@@ -167,12 +167,12 @@ const Dashboard: React.FC<DashboardProps> = ({ habits, profileImage, onToggle, o
                     e.stopPropagation();
                     onToggle(habit.id);
                   }}
-                  className={`size-11 rounded-[18px] border-2 transition-all flex items-center justify-center ${isCompleted ? 'bg-gradient-primary border-transparent shadow-lg shadow-primary/30 scale-110' : 'border-white/10 bg-white/5 hover:border-primary/50'}`}
+                  className={`size-10 rounded-[14px] border-2 transition-all flex items-center justify-center ${isCompleted ? 'bg-gradient-primary border-transparent shadow-lg shadow-primary/30 scale-110' : 'border-white/10 bg-white/5 hover:border-primary/50'}`}
                 >
                   {isCompleted ? (
-                    <span className="material-symbols-outlined text-xl text-white font-bold">check</span>
+                    <span className="material-symbols-outlined text-lg text-white font-bold">check</span>
                   ) : (
-                    <span className="material-symbols-outlined text-xl text-text-secondary/30">circle</span>
+                    <span className="material-symbols-outlined text-lg text-text-secondary/30">circle</span>
                   )}
                 </button>
               </div>
