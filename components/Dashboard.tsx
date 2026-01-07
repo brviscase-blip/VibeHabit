@@ -22,12 +22,12 @@ const Dashboard: React.FC<DashboardProps> = ({ habits, profileImage, onToggle, o
 
   return (
     <div className="animate-fade-in flex flex-col gap-6 pt-6">
-      {/* Header - Reduced padding and sizes */}
+      {/* Header - Reduced radius by 15% (16px -> 14px, xl -> 10px) */}
       <header className="flex items-center justify-between px-6">
         <div className="flex items-center gap-4">
           <button onClick={onProfileClick} className="relative group">
             <div 
-              className="bg-center bg-no-repeat bg-cover rounded-[16px] size-14 ring-2 ring-white/5 group-hover:ring-primary/50 transition-all duration-300 shadow-xl"
+              className="bg-center bg-no-repeat bg-cover rounded-[14px] size-14 ring-2 ring-white/5 group-hover:ring-primary/50 transition-all duration-300 shadow-xl"
               style={{ backgroundImage: `url("${profileImage}")` }}
             ></div>
             <div className="absolute -bottom-1 -right-1 size-5 bg-gradient-primary rounded-full border-2 border-[#0f111a] flex items-center justify-center">
@@ -42,17 +42,17 @@ const Dashboard: React.FC<DashboardProps> = ({ habits, profileImage, onToggle, o
           </div>
         </div>
         <div className="flex gap-2">
-          <button className="flex items-center justify-center size-10 rounded-xl bg-surface border border-white/5 text-white/80 hover:bg-surface-light transition-all">
+          <button className="flex items-center justify-center size-10 rounded-[10px] bg-surface border border-white/5 text-white/80 hover:bg-surface-light transition-all">
             <span className="material-symbols-outlined text-xl">search</span>
           </button>
-          <button className="flex items-center justify-center size-10 rounded-xl bg-surface border border-white/5 text-white/80 hover:bg-surface-light transition-all relative">
+          <button className="flex items-center justify-center size-10 rounded-[10px] bg-surface border border-white/5 text-white/80 hover:bg-surface-light transition-all relative">
             <span className="material-symbols-outlined text-xl">notifications</span>
             <span className="absolute top-2.5 right-2.5 size-2 bg-primary rounded-full shadow-[0_0_8px_rgba(233,30,99,0.8)]"></span>
           </button>
         </div>
       </header>
 
-      {/* Week View - Reduced spacing */}
+      {/* Week View */}
       <div className="px-6">
         <div className="flex justify-between items-center mb-5">
           <h3 className="font-bold text-lg text-white tracking-tight">Semana de Foco</h3>
@@ -91,13 +91,13 @@ const Dashboard: React.FC<DashboardProps> = ({ habits, profileImage, onToggle, o
         </div>
       </div>
 
-      {/* Main Stats Card - Reduced padding and text */}
+      {/* Main Stats Card - Reduced radius 32px -> 27px */}
       <div className="px-6">
-        <div className="relative overflow-hidden rounded-[32px] bg-surface border border-white/5 shadow-2xl p-6 flex items-center justify-between group">
+        <div className="relative overflow-hidden rounded-[27px] bg-surface border border-white/5 shadow-2xl p-6 flex items-center justify-between group">
           <div className="absolute top-0 right-0 size-56 bg-primary/10 blur-[70px] rounded-full translate-x-12 -translate-y-12"></div>
           <div className="flex flex-col gap-2 z-10">
             <div className="flex items-center gap-2">
-              <span className="px-2.5 py-0.5 rounded-lg bg-accent/20 text-accent text-[9px] font-black uppercase tracking-[0.2em]">Pulso Real</span>
+              <span className="px-2.5 py-0.5 rounded-[7px] bg-accent/20 text-accent text-[9px] font-black uppercase tracking-[0.2em]">Pulso Real</span>
             </div>
             <h3 className="text-white text-3xl font-black leading-none tracking-tight">
               {percentage}% <span className="text-xl opacity-50 font-medium tracking-normal">Completo</span>
@@ -133,11 +133,11 @@ const Dashboard: React.FC<DashboardProps> = ({ habits, profileImage, onToggle, o
         </div>
       </div>
 
-      {/* Habit List - Reduced item padding and icon size */}
+      {/* Habit List - Reduced radius 24px -> 20px, icon 18px -> 15px */}
       <div className="px-6 flex flex-col gap-4 pb-10">
         <div className="flex items-center justify-between">
           <h3 className="text-lg font-bold text-white tracking-tight">Missões Atuais</h3>
-          <button className="text-[10px] font-black text-primary uppercase tracking-[0.15em] px-3 py-1 bg-primary/5 rounded-lg border border-primary/10">GERENCIAR</button>
+          <button className="text-[10px] font-black text-primary uppercase tracking-[0.15em] px-3 py-1 bg-primary/5 rounded-[7px] border border-primary/10">GERENCIAR</button>
         </div>
         <div className="flex flex-col gap-3">
           {habits.map((habit) => {
@@ -145,11 +145,11 @@ const Dashboard: React.FC<DashboardProps> = ({ habits, profileImage, onToggle, o
             return (
               <div 
                 key={habit.id}
-                className="group relative flex items-center justify-between p-4 rounded-[24px] bg-surface border border-white/5 hover:border-primary/30 transition-all cursor-pointer active:scale-[0.98]"
+                className="group relative flex items-center justify-between p-4 rounded-[20px] bg-surface border border-white/5 hover:border-primary/30 transition-all cursor-pointer active:scale-[0.98]"
                 onClick={() => onHabitClick(habit.id)}
               >
                 <div className="flex items-center gap-5">
-                  <div className="size-14 rounded-[18px] bg-[#0f111a] flex items-center justify-center text-white/90 shadow-inner group-hover:scale-105 transition-transform border border-white/5">
+                  <div className="size-14 rounded-[15px] bg-[#0f111a] flex items-center justify-center text-white/90 shadow-inner group-hover:scale-105 transition-transform border border-white/5">
                     <span className="material-symbols-outlined text-3xl filled">{habit.category}</span>
                   </div>
                   <div className="flex flex-col">
@@ -167,7 +167,7 @@ const Dashboard: React.FC<DashboardProps> = ({ habits, profileImage, onToggle, o
                     e.stopPropagation();
                     onToggle(habit.id);
                   }}
-                  className={`size-10 rounded-[14px] border-2 transition-all flex items-center justify-center ${isCompleted ? 'bg-gradient-primary border-transparent shadow-lg shadow-primary/30 scale-110' : 'border-white/10 bg-white/5 hover:border-primary/50'}`}
+                  className={`size-10 rounded-[12px] border-2 transition-all flex items-center justify-center ${isCompleted ? 'bg-gradient-primary border-transparent shadow-lg shadow-primary/30 scale-110' : 'border-white/10 bg-white/5 hover:border-primary/50'}`}
                 >
                   {isCompleted ? (
                     <span className="material-symbols-outlined text-lg text-white font-bold">check</span>

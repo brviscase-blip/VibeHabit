@@ -23,19 +23,19 @@ const StatsView: React.FC<StatsViewProps> = ({ habits, onBack }) => {
   return (
     <div className="animate-fade-in flex flex-col gap-6">
       <header className="sticky top-0 z-20 flex items-center justify-between px-6 py-5 bg-[#0f111a]/90 backdrop-blur-xl">
-        <button onClick={onBack} className="flex size-10 items-center justify-center rounded-xl bg-surface border border-white/5 shadow-xl">
+        <button onClick={onBack} className="flex size-10 items-center justify-center rounded-[10px] bg-surface border border-white/5 shadow-xl">
           <span className="material-symbols-outlined text-white text-xl">arrow_back</span>
         </button>
         <h1 className="text-lg font-black tracking-tight text-white uppercase tracking-[0.1em]">Estatísticas</h1>
-        <button className="flex size-10 items-center justify-center rounded-xl bg-surface border border-white/5 shadow-xl">
+        <button className="flex size-10 items-center justify-center rounded-[10px] bg-surface border border-white/5 shadow-xl">
           <span className="material-symbols-outlined text-white text-xl">calendar_month</span>
         </button>
       </header>
 
       <div className="px-6 flex flex-col gap-6 pb-10">
-        {/* Performance Overview - Compacted */}
+        {/* Performance Overview - Radius 28px -> 24px */}
         <section className="grid grid-cols-2 gap-3">
-          <div className="bg-surface rounded-[28px] p-5 border border-white/5 relative overflow-hidden group">
+          <div className="bg-surface rounded-[24px] p-5 border border-white/5 relative overflow-hidden group">
             <div className="absolute top-0 right-0 size-20 bg-primary/10 blur-3xl group-hover:bg-primary/20 transition-all"></div>
             <span className="text-text-secondary text-[9px] font-black uppercase tracking-[0.15em] mb-3 block">Sequência Máxima</span>
             <div className="flex items-baseline gap-1.5">
@@ -47,7 +47,7 @@ const StatsView: React.FC<StatsViewProps> = ({ habits, onBack }) => {
               <span className="text-[9px] font-bold text-accent">+3 este mês</span>
             </div>
           </div>
-          <div className="bg-surface rounded-[28px] p-5 border border-white/5 relative overflow-hidden group">
+          <div className="bg-surface rounded-[24px] p-5 border border-white/5 relative overflow-hidden group">
             <div className="absolute top-0 right-0 size-20 bg-accent/10 blur-3xl group-hover:bg-accent/20 transition-all"></div>
             <span className="text-text-secondary text-[9px] font-black uppercase tracking-[0.15em] mb-3 block">Domínio</span>
             <div className="flex items-baseline gap-1.5">
@@ -61,8 +61,8 @@ const StatsView: React.FC<StatsViewProps> = ({ habits, onBack }) => {
           </div>
         </section>
 
-        {/* Weekly Chart - Optimized */}
-        <section className="bg-surface rounded-[32px] p-6 border border-white/5 shadow-2xl relative overflow-hidden">
+        {/* Weekly Chart - Radius 32px -> 27px */}
+        <section className="bg-surface rounded-[27px] p-6 border border-white/5 shadow-2xl relative overflow-hidden">
           <div className="flex items-center justify-between mb-8">
             <div>
               <h3 className="text-lg font-black text-white tracking-tight">Fluxo de Energia</h3>
@@ -94,15 +94,15 @@ const StatsView: React.FC<StatsViewProps> = ({ habits, onBack }) => {
           </div>
         </section>
 
-        {/* Quest Breakdown - Smaller rows */}
+        {/* Quest Breakdown - Radius 24px -> 20px */}
         <section className="flex flex-col gap-3">
           <h3 className="text-base font-black text-white tracking-tight">Progresso de Habilidades</h3>
           <div className="flex flex-col gap-2.5">
             {habits.slice(0, 4).map((h, idx) => {
               const progress = [90, 75, 60, 45][idx];
               return (
-                <div key={h.id} className="bg-surface rounded-[24px] p-4 border border-white/5 flex items-center gap-4 group">
-                  <div className="size-10 rounded-xl bg-[#0f111a] flex items-center justify-center text-primary border border-white/5">
+                <div key={h.id} className="bg-surface rounded-[20px] p-4 border border-white/5 flex items-center gap-4 group">
+                  <div className="size-10 rounded-[10px] bg-[#0f111a] flex items-center justify-center text-primary border border-white/5">
                     <span className="material-symbols-outlined text-xl filled">{h.category}</span>
                   </div>
                   <div className="flex-1 flex flex-col gap-1.5">

@@ -48,7 +48,7 @@ const CreateHabit: React.FC<CreateHabitProps> = ({ onBack, onSave }) => {
             <input 
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full bg-surface border border-white/5 focus:border-primary/50 rounded-xl py-3 pl-11 pr-4 text-base font-medium text-white placeholder:text-white/20 focus:ring-0 transition-all shadow-sm" 
+              className="w-full bg-surface border border-white/5 focus:border-primary/50 rounded-[10px] py-3 pl-11 pr-4 text-base font-medium text-white placeholder:text-white/20 focus:ring-0 transition-all shadow-sm" 
               placeholder="Ex: Corrida Matinal" 
               type="text"
             />
@@ -60,7 +60,7 @@ const CreateHabit: React.FC<CreateHabitProps> = ({ onBack, onSave }) => {
           <textarea 
             value={desc}
             onChange={(e) => setDesc(e.target.value)}
-            className="w-full bg-surface border border-white/5 focus:border-primary/50 rounded-xl p-3.5 text-sm font-normal text-white placeholder:text-white/20 focus:ring-0 transition-all shadow-sm resize-none min-h-[80px]" 
+            className="w-full bg-surface border border-white/5 focus:border-primary/50 rounded-[10px] p-3.5 text-sm font-normal text-white placeholder:text-white/20 focus:ring-0 transition-all shadow-sm resize-none min-h-[80px]" 
             placeholder="Qual é a sua motivação?"
           ></textarea>
         </div>
@@ -72,7 +72,7 @@ const CreateHabit: React.FC<CreateHabitProps> = ({ onBack, onSave }) => {
               <button 
                 key={f}
                 onClick={() => setFreq(f)}
-                className={`px-4 py-2.5 rounded-lg font-bold text-xs transition-all ${freq === f ? 'bg-gradient-primary text-white shadow-lg shadow-primary/20' : 'bg-surface text-text-secondary border border-white/5 hover:bg-surface-light'}`}
+                className={`px-4 py-2.5 rounded-[7px] font-bold text-xs transition-all ${freq === f ? 'bg-gradient-primary text-white shadow-lg shadow-primary/20' : 'bg-surface text-text-secondary border border-white/5 hover:bg-surface-light'}`}
               >
                 {f.charAt(0).toUpperCase() + f.slice(1)}
               </button>
@@ -87,7 +87,7 @@ const CreateHabit: React.FC<CreateHabitProps> = ({ onBack, onSave }) => {
               <button 
                 key={c}
                 onClick={() => setCat(c)}
-                className={`w-14 h-14 rounded-xl shrink-0 flex items-center justify-center transition-all ${cat === c ? 'bg-gradient-primary ring-2 ring-primary ring-offset-4 ring-offset-background' : 'bg-surface border border-white/5 text-text-secondary hover:bg-surface-light'}`}
+                className={`w-14 h-14 rounded-[10px] shrink-0 flex items-center justify-center transition-all ${cat === c ? 'bg-gradient-primary ring-2 ring-primary ring-offset-4 ring-offset-background' : 'bg-surface border border-white/5 text-text-secondary hover:bg-surface-light'}`}
               >
                 <span className="material-symbols-outlined text-xl filled">{c}</span>
               </button>
@@ -99,7 +99,7 @@ const CreateHabit: React.FC<CreateHabitProps> = ({ onBack, onSave }) => {
       <div className="mt-10">
         <button 
           onClick={handleSave}
-          className="w-full bg-gradient-primary text-white font-bold text-base py-3.5 rounded-xl shadow-lg shadow-primary/25 hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-2.5"
+          className="w-full bg-gradient-primary text-white font-bold text-base py-3.5 rounded-[10px] shadow-lg shadow-primary/25 hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-2.5"
         >
           <span>Salvar Hábito</span>
           <span className="material-symbols-outlined text-xl">check</span>
