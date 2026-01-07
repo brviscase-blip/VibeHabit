@@ -129,8 +129,8 @@ const App: React.FC = () => {
           </div>
         )}
 
-        <nav className="fixed bottom-0 left-0 right-0 w-full max-w-xl mx-auto bg-[#0f111a]/95 backdrop-blur-2xl border-t border-white/5 px-4 pb-8 pt-3 z-50">
-          <div className="flex justify-center items-center gap-x-5">
+        <nav className="fixed bottom-0 left-0 right-0 w-full max-w-xl mx-auto bg-[#0f111a]/95 backdrop-blur-2xl border-t border-white/5 px-4 pb-6 pt-3 z-50">
+          <div className="flex justify-center items-center gap-x-6">
             <button 
               onClick={() => setCurrentScreen('dashboard')}
               className={`flex flex-col items-center min-w-[50px] transition-all ${currentScreen === 'dashboard' ? 'text-primary' : 'text-text-secondary'}`}
@@ -145,14 +145,14 @@ const App: React.FC = () => {
               <span className={`material-symbols-outlined text-[24px] ${currentScreen === 'stats' ? 'filled scale-110' : ''}`}>bar_chart</span>
               <span className="text-[9px] mt-1 font-bold uppercase tracking-widest">Stats</span>
             </button>
-            <div className="relative -top-10 mx-1">
-              <button 
-                onClick={() => setCurrentScreen('create')}
-                className="flex items-center justify-center size-14 rounded-xl bg-gradient-primary text-white shadow-[0_8px_24px_rgba(233,30,99,0.4)] active:scale-90 transition-all border-4 border-[#0f111a]"
-              >
-                <span className="material-symbols-outlined text-3xl font-bold">add</span>
-              </button>
-            </div>
+            
+            <button 
+              onClick={() => setCurrentScreen('create')}
+              className="flex items-center justify-center size-12 rounded-xl bg-gradient-primary text-white shadow-[0_4px_16px_rgba(233,30,99,0.3)] active:scale-90 transition-all border-2 border-white/10"
+            >
+              <span className="material-symbols-outlined text-2xl font-bold">add</span>
+            </button>
+            
             <button className="flex flex-col items-center min-w-[50px] text-text-secondary hover:text-white transition-colors">
               <span className="material-symbols-outlined text-[24px]">groups</span>
               <span className="text-[9px] mt-1 font-bold uppercase tracking-widest">Social</span>
