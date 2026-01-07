@@ -129,23 +129,23 @@ const App: React.FC = () => {
           </div>
         )}
 
-        <nav className="fixed bottom-0 left-0 right-0 w-full max-w-xl mx-auto bg-[#0f111a]/95 backdrop-blur-2xl border-t border-white/5 px-8 pb-8 pt-3 z-50">
-          <div className="flex justify-between items-center">
+        <nav className="fixed bottom-0 left-0 right-0 w-full max-w-xl mx-auto bg-[#0f111a]/95 backdrop-blur-2xl border-t border-white/5 px-4 pb-8 pt-3 z-50">
+          <div className="flex justify-center items-center gap-x-5">
             <button 
               onClick={() => setCurrentScreen('dashboard')}
-              className={`flex flex-col items-center transition-all ${currentScreen === 'dashboard' ? 'text-primary' : 'text-text-secondary'}`}
+              className={`flex flex-col items-center min-w-[50px] transition-all ${currentScreen === 'dashboard' ? 'text-primary' : 'text-text-secondary'}`}
             >
               <span className={`material-symbols-outlined text-[24px] ${currentScreen === 'dashboard' ? 'filled scale-110 drop-shadow-[0_0_8px_rgba(233,30,99,0.3)]' : ''}`}>home</span>
               <span className="text-[9px] mt-1 font-bold uppercase tracking-widest">Home</span>
             </button>
             <button 
               onClick={() => setCurrentScreen('stats')}
-              className={`flex flex-col items-center transition-all ${currentScreen === 'stats' ? 'text-primary' : 'text-text-secondary'}`}
+              className={`flex flex-col items-center min-w-[50px] transition-all ${currentScreen === 'stats' ? 'text-primary' : 'text-text-secondary'}`}
             >
               <span className={`material-symbols-outlined text-[24px] ${currentScreen === 'stats' ? 'filled scale-110' : ''}`}>bar_chart</span>
               <span className="text-[9px] mt-1 font-bold uppercase tracking-widest">Stats</span>
             </button>
-            <div className="relative -top-10">
+            <div className="relative -top-10 mx-1">
               <button 
                 onClick={() => setCurrentScreen('create')}
                 className="flex items-center justify-center size-14 rounded-xl bg-gradient-primary text-white shadow-[0_8px_24px_rgba(233,30,99,0.4)] active:scale-90 transition-all border-4 border-[#0f111a]"
@@ -153,11 +153,11 @@ const App: React.FC = () => {
                 <span className="material-symbols-outlined text-3xl font-bold">add</span>
               </button>
             </div>
-            <button className="flex flex-col items-center text-text-secondary hover:text-white transition-colors">
+            <button className="flex flex-col items-center min-w-[50px] text-text-secondary hover:text-white transition-colors">
               <span className="material-symbols-outlined text-[24px]">groups</span>
               <span className="text-[9px] mt-1 font-bold uppercase tracking-widest">Social</span>
             </button>
-            <button className="flex flex-col items-center text-text-secondary hover:text-white transition-colors">
+            <button className="flex flex-col items-center min-w-[50px] text-text-secondary hover:text-white transition-colors">
               <span className="material-symbols-outlined text-[24px]">settings</span>
               <span className="text-[9px] mt-1 font-bold uppercase tracking-widest">Tools</span>
             </button>
