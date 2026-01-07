@@ -141,13 +141,12 @@ const App: React.FC = () => {
               <span className={`material-symbols-outlined text-[24px] ${currentScreen === 'dashboard' ? 'filled scale-110 drop-shadow-[0_0_8px_rgba(233,30,99,0.3)]' : ''}`}>home</span>
               <span className="text-[9px] mt-1 font-bold uppercase tracking-widest">Home</span>
             </button>
-            <button 
-              onClick={() => setCurrentScreen('stats')}
-              className={`flex flex-col items-center min-w-[50px] transition-all ${currentScreen === 'stats' ? 'text-primary' : 'text-text-secondary'}`}
-            >
-              <span className={`material-symbols-outlined text-[24px] ${currentScreen === 'stats' ? 'filled scale-110' : ''}`}>bar_chart</span>
-              <span className="text-[9px] mt-1 font-bold uppercase tracking-widest">Stats</span>
-            </button>
+            
+            {/* Placeholder Slot 1 */}
+            <div className="flex flex-col items-center min-w-[50px] opacity-20">
+              <div className="size-6 border-2 border-dashed border-text-secondary rounded-md"></div>
+              <div className="h-2 w-8 bg-text-secondary/50 rounded-full mt-2"></div>
+            </div>
             
             <button 
               onClick={() => setCurrentScreen('create')}
@@ -156,14 +155,17 @@ const App: React.FC = () => {
               <span className="material-symbols-outlined text-2xl font-bold">add</span>
             </button>
             
-            <button className="flex flex-col items-center min-w-[50px] text-text-secondary hover:text-white transition-colors">
-              <span className="material-symbols-outlined text-[24px]">groups</span>
-              <span className="text-[9px] mt-1 font-bold uppercase tracking-widest">Social</span>
-            </button>
-            <button className="flex flex-col items-center min-w-[50px] text-text-secondary hover:text-white transition-colors">
-              <span className="material-symbols-outlined text-[24px]">settings</span>
-              <span className="text-[9px] mt-1 font-bold uppercase tracking-widest">Tools</span>
-            </button>
+            {/* Placeholder Slot 2 */}
+            <div className="flex flex-col items-center min-w-[50px] opacity-20">
+              <div className="size-6 border-2 border-dashed border-text-secondary rounded-md"></div>
+              <div className="h-2 w-8 bg-text-secondary/50 rounded-full mt-2"></div>
+            </div>
+
+            {/* Placeholder Slot 3 */}
+            <div className="flex flex-col items-center min-w-[50px] opacity-20">
+              <div className="size-6 border-2 border-dashed border-text-secondary rounded-md"></div>
+              <div className="h-2 w-8 bg-text-secondary/50 rounded-full mt-2"></div>
+            </div>
           </div>
         </nav>
       </div>
