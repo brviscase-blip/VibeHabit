@@ -10,7 +10,7 @@ interface CreateHabitProps {
 const CreateHabit: React.FC<CreateHabitProps> = ({ onBack, onSave }) => {
   const [name, setName] = useState('');
   const [desc, setDesc] = useState('');
-  const [freq, setFreq] = useState<'daily' | 'weekly' | 'monthly'>('daily');
+  const [freq, setFreq] = useState<'diário' | 'semanal' | 'mensal'>('diário');
   const [cat, setCat] = useState<HabitCategory>(HabitCategory.FITNESS);
 
   const handleSave = () => {
@@ -20,7 +20,7 @@ const CreateHabit: React.FC<CreateHabitProps> = ({ onBack, onSave }) => {
       name,
       description: desc,
       category: cat,
-      goal: 'Done',
+      goal: 'Concluído',
       completedDays: [],
       color: 'primary',
       frequency: freq,
@@ -34,13 +34,13 @@ const CreateHabit: React.FC<CreateHabitProps> = ({ onBack, onSave }) => {
         <button onClick={onBack} className="flex items-center justify-center w-10 h-10 -ml-2 rounded-full hover:bg-surface transition-colors">
           <span className="material-symbols-outlined text-white">arrow_back</span>
         </button>
-        <h1 className="text-xl font-bold tracking-tight text-white">Create Habit</h1>
+        <h1 className="text-xl font-bold tracking-tight text-white">Criar Hábito</h1>
         <div className="w-10"></div>
       </header>
 
       <div className="space-y-6 mt-4">
         <div className="space-y-2">
-          <label className="block text-xs font-bold text-text-secondary uppercase tracking-widest ml-1">Name</label>
+          <label className="block text-xs font-bold text-text-secondary uppercase tracking-widest ml-1">Nome</label>
           <div className="relative group">
             <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
               <span className="material-symbols-outlined text-text-secondary group-focus-within:text-primary transition-colors">edit</span>
@@ -49,26 +49,26 @@ const CreateHabit: React.FC<CreateHabitProps> = ({ onBack, onSave }) => {
               value={name}
               onChange={(e) => setName(e.target.value)}
               className="w-full bg-surface border border-white/5 focus:border-primary/50 rounded-2xl py-4 pl-12 pr-4 text-lg font-medium text-white placeholder:text-white/20 focus:ring-0 transition-all shadow-sm" 
-              placeholder="e.g. Morning Run" 
+              placeholder="Ex: Corrida Matinal" 
               type="text"
             />
           </div>
         </div>
 
         <div className="space-y-2">
-          <label className="block text-xs font-bold text-text-secondary uppercase tracking-widest ml-1">Description</label>
+          <label className="block text-xs font-bold text-text-secondary uppercase tracking-widest ml-1">Descrição</label>
           <textarea 
             value={desc}
             onChange={(e) => setDesc(e.target.value)}
             className="w-full bg-surface border border-white/5 focus:border-primary/50 rounded-2xl p-4 text-base font-normal text-white placeholder:text-white/20 focus:ring-0 transition-all shadow-sm resize-none min-h-[100px]" 
-            placeholder="What's your motivation?"
+            placeholder="Qual é a sua motivação?"
           ></textarea>
         </div>
 
         <div className="space-y-4">
-          <label className="block text-xs font-bold text-text-secondary uppercase tracking-widest ml-1">Frequency</label>
+          <label className="block text-xs font-bold text-text-secondary uppercase tracking-widest ml-1">Frequência</label>
           <div className="flex gap-3">
-            {(['daily', 'weekly', 'monthly'] as const).map(f => (
+            {(['diário', 'semanal', 'mensal'] as const).map(f => (
               <button 
                 key={f}
                 onClick={() => setFreq(f)}
@@ -81,7 +81,7 @@ const CreateHabit: React.FC<CreateHabitProps> = ({ onBack, onSave }) => {
         </div>
 
         <div className="space-y-4">
-          <label className="block text-xs font-bold text-text-secondary uppercase tracking-widest ml-1">Icon & Color</label>
+          <label className="block text-xs font-bold text-text-secondary uppercase tracking-widest ml-1">Ícone & Categoria</label>
           <div className="flex gap-4 overflow-x-auto no-scrollbar py-2">
             {Object.values(HabitCategory).map(c => (
               <button 
@@ -101,7 +101,7 @@ const CreateHabit: React.FC<CreateHabitProps> = ({ onBack, onSave }) => {
           onClick={handleSave}
           className="w-full bg-gradient-primary text-white font-bold text-lg py-4 rounded-2xl shadow-lg shadow-primary/25 hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-3"
         >
-          <span>Save Habit</span>
+          <span>Salvar Hábito</span>
           <span className="material-symbols-outlined">check</span>
         </button>
       </div>

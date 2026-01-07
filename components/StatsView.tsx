@@ -9,13 +9,13 @@ interface StatsViewProps {
 
 const StatsView: React.FC<StatsViewProps> = ({ habits, onBack }) => {
   const weeklyData = [
-    { day: 'Mon', val: 65 },
-    { day: 'Tue', val: 40 },
-    { day: 'Wed', val: 85 },
-    { day: 'Thu', val: 50 },
-    { day: 'Fri', val: 95 },
-    { day: 'Sat', val: 70 },
-    { day: 'Sun', val: 30 },
+    { day: 'SEG', val: 65 },
+    { day: 'TER', val: 40 },
+    { day: 'QUA', val: 85 },
+    { day: 'QUI', val: 50 },
+    { day: 'SEX', val: 95 },
+    { day: 'SÁB', val: 70 },
+    { day: 'DOM', val: 30 },
   ];
 
   const maxVal = Math.max(...weeklyData.map(d => d.val));
@@ -26,7 +26,7 @@ const StatsView: React.FC<StatsViewProps> = ({ habits, onBack }) => {
         <button onClick={onBack} className="flex size-11 items-center justify-center rounded-2xl bg-surface border border-white/5 shadow-xl">
           <span className="material-symbols-outlined text-white">arrow_back</span>
         </button>
-        <h1 className="text-xl font-black tracking-tight text-white uppercase tracking-[0.1em]">Analytics</h1>
+        <h1 className="text-xl font-black tracking-tight text-white uppercase tracking-[0.1em]">Estatísticas</h1>
         <button className="flex size-11 items-center justify-center rounded-2xl bg-surface border border-white/5 shadow-xl">
           <span className="material-symbols-outlined text-white">calendar_month</span>
         </button>
@@ -37,26 +37,26 @@ const StatsView: React.FC<StatsViewProps> = ({ habits, onBack }) => {
         <section className="grid grid-cols-2 gap-4">
           <div className="bg-surface rounded-[32px] p-6 border border-white/5 relative overflow-hidden group">
             <div className="absolute top-0 right-0 size-24 bg-primary/10 blur-3xl group-hover:bg-primary/20 transition-all"></div>
-            <span className="text-text-secondary text-[10px] font-black uppercase tracking-[0.2em] mb-4 block">Peak Streak</span>
+            <span className="text-text-secondary text-[10px] font-black uppercase tracking-[0.2em] mb-4 block">Sequência Máxima</span>
             <div className="flex items-baseline gap-2">
               <span className="text-4xl font-black text-white">24</span>
-              <span className="text-xs text-text-secondary font-bold">DAYS</span>
+              <span className="text-xs text-text-secondary font-bold">DIAS</span>
             </div>
             <div className="mt-4 flex items-center gap-1.5">
               <span className="material-symbols-outlined text-accent text-sm filled">trending_up</span>
-              <span className="text-[10px] font-bold text-accent">+3 from last month</span>
+              <span className="text-[10px] font-bold text-accent">+3 desde o último mês</span>
             </div>
           </div>
           <div className="bg-surface rounded-[32px] p-6 border border-white/5 relative overflow-hidden group">
             <div className="absolute top-0 right-0 size-24 bg-accent/10 blur-3xl group-hover:bg-accent/20 transition-all"></div>
-            <span className="text-text-secondary text-[10px] font-black uppercase tracking-[0.2em] mb-4 block">Mastery</span>
+            <span className="text-text-secondary text-[10px] font-black uppercase tracking-[0.2em] mb-4 block">Domínio</span>
             <div className="flex items-baseline gap-2">
               <span className="text-4xl font-black text-white">82</span>
               <span className="text-xs text-text-secondary font-bold">%</span>
             </div>
             <div className="mt-4 flex items-center gap-1.5">
               <span className="material-symbols-outlined text-primary text-sm filled">stars</span>
-              <span className="text-[10px] font-bold text-primary">Elite Level</span>
+              <span className="text-[10px] font-bold text-primary">Nível Elite</span>
             </div>
           </div>
         </section>
@@ -65,8 +65,8 @@ const StatsView: React.FC<StatsViewProps> = ({ habits, onBack }) => {
         <section className="bg-surface rounded-[40px] p-8 border border-white/5 shadow-2xl relative overflow-hidden">
           <div className="flex items-center justify-between mb-10">
             <div>
-              <h3 className="text-xl font-black text-white tracking-tight">Energy Flow</h3>
-              <p className="text-text-secondary text-[11px] font-bold uppercase tracking-widest">Last 7 Days</p>
+              <h3 className="text-xl font-black text-white tracking-tight">Fluxo de Energia</h3>
+              <p className="text-text-secondary text-[11px] font-bold uppercase tracking-widest">Últimos 7 Dias</p>
             </div>
             <span className="material-symbols-outlined text-primary">analytics</span>
           </div>
@@ -87,7 +87,7 @@ const StatsView: React.FC<StatsViewProps> = ({ habits, onBack }) => {
                   </div>
                 </div>
                 <span className={`text-[10px] font-black tracking-tighter ${d.val === maxVal ? 'text-white' : 'text-text-secondary/40'}`}>
-                  {d.day.toUpperCase()}
+                  {d.day}
                 </span>
               </div>
             ))}
@@ -96,7 +96,7 @@ const StatsView: React.FC<StatsViewProps> = ({ habits, onBack }) => {
 
         {/* Quest Breakdown */}
         <section className="flex flex-col gap-4">
-          <h3 className="text-lg font-black text-white tracking-tight">Skill Progress</h3>
+          <h3 className="text-lg font-black text-white tracking-tight">Progresso de Habilidades</h3>
           <div className="flex flex-col gap-3">
             {habits.slice(0, 4).map((h, idx) => {
               const progress = [90, 75, 60, 45][idx];

@@ -35,12 +35,24 @@
       }
     </script>
     <style>
-      body {
+      /* Hide scrollbar for all elements while maintaining functionality */
+      * {
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* IE/Edge */
+      }
+      
+      *::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, Opera */
+      }
+
+      html, body {
         background-color: #0f111a;
         color: white;
         margin: 0;
         padding: 0;
+        overflow-x: hidden;
       }
+
       .no-scrollbar::-webkit-scrollbar {
         display: none;
       }
@@ -48,11 +60,17 @@
         -ms-overflow-style: none;
         scrollbar-width: none;
       }
+      
       .material-symbols-outlined {
         font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
       }
       .filled {
         font-variation-settings: 'FILL' 1;
+      }
+
+      /* Global focus ring removal for cleaner mobile look */
+      *:focus {
+        outline: none;
       }
     </style>
   <script type="importmap">

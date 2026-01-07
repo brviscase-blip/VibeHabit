@@ -1,21 +1,24 @@
 
 import React from 'react';
-import { Habit, DailyInsight } from '../types';
+import { Habit } from '../types';
 
 interface DashboardProps {
   habits: Habit[];
-  insight: DailyInsight | null;
   profileImage: string;
   onToggle: (id: string) => void;
   onHabitClick: (id: string) => void;
   onProfileClick: () => void;
 }
 
-const Dashboard: React.FC<DashboardProps> = ({ habits, insight, profileImage, onToggle, onHabitClick, onProfileClick }) => {
-  const today = new Date().toISOString().split('T')[0];
-  const completedCount = habits.filter(h => h.completedDays.includes(today)).length;
+const Dashboard: React.FC<DashboardProps> = ({ habits, profileImage, onToggle, onHabitClick, onProfileClick }) => {
+  const today = new Date();
+  const todayStr = today.toISOString().split('T')[0];
+  const completedCount = habits.filter(h => h.completedDays.includes(todayStr)).length;
   const totalCount = habits.length;
   const percentage = totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 0;
+
+  // PT-BR Weekdays: Domingo, Segunda, Terça, Quarta, Quinta, Sexta, Sábado
+  const weekDays = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'];
 
   return (
     <div className="animate-fade-in flex flex-col gap-6 pt-4">
@@ -33,9 +36,9 @@ const Dashboard: React.FC<DashboardProps> = ({ habits, insight, profileImage, on
           </button>
           <div className="flex flex-col">
             <span className="text-text-secondary text-[11px] font-bold uppercase tracking-[0.15em] mb-0.5 opacity-70">
-              {new Date().toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}
+              {today.toLocaleDateString('pt-BR', { weekday: 'short', month: 'short', day: 'numeric' }).toUpperCase()}
             </span>
-            <h2 className="text-2xl font-extrabold text-white tracking-tight leading-none">Hi, Alex</h2>
+            <h2 className="text-2xl font-extrabold text-white tracking-tight leading-none">Olá, Alex</h2>
           </div>
         </div>
         <div className="flex gap-2">
@@ -49,26 +52,46 @@ const Dashboard: React.FC<DashboardProps> = ({ habits, insight, profileImage, on
         </div>
       </header>
 
-      {/* Week View */}
+      {/* Week View - Aligned to Screenshot with top-aligned labels */}
       <div className="px-6">
-        <div className="flex justify-between items-center mb-4">
-          <h3 className="font-bold text-lg text-white tracking-tight">Focus Week</h3>
-          <div className="px-3 py-1 bg-white/5 rounded-full border border-white/10 text-[10px] font-bold text-primary uppercase tracking-widest">Today</div>
+        <div className="flex justify-between items-center mb-5">
+          <h3 className="font-bold text-lg text-white tracking-tight">Semana de Foco</h3>
+          <div className="px-3 py-1 bg-primary/10 rounded-full border border-primary/20 text-[10px] font-black text-primary uppercase tracking-widest">HOJE</div>
         </div>
-        <div className="flex justify-between items-center gap-1">
-          {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((day, idx) => {
+        <div className="flex justify-between items-start">
+          {weekDays.map((day, idx) => {
             const date = new Date();
-            date.setDate(date.getDate() - (date.getDay() - idx));
-            const isToday = idx === new Date().getDay();
-            const isCompleted = Math.random() > 0.4; // Mock past data
+            const diff = idx - today.getDay();
+            date.setDate(today.getDate() + diff);
+            const isToday = idx === today.getDay();
+            
+            // Logic for completion dots (Mock visual logic to match user image)
+            const isCompleted = idx < today.getDay() || (isToday && percentage >= 100);
             
             return (
-              <div key={idx} className="flex flex-col items-center gap-3 min-w-[48px]">
-                <span className={`text-[10px] font-black tracking-tighter ${isToday ? 'text-primary' : 'text-text-secondary/60'}`}>{day}</span>
-                <button className={`size-11 rounded-2xl flex items-center justify-center text-sm font-black transition-all border ${isToday ? 'bg-gradient-primary border-transparent text-white shadow-lg shadow-primary/20' : 'bg-surface border-white/5 text-text-secondary'}`}>
-                  {date.getDate()}
-                </button>
-                {isCompleted && !isToday && <div className="size-1.5 rounded-full bg-primary/40"></div>}
+              <div key={idx} className="flex flex-col items-center">
+                {/* Day Label - Top Aligned */}
+                <span className={`text-[11px] font-black tracking-tighter mb-4 ${isToday ? 'text-primary' : 'text-text-secondary/40'}`}>
+                  {day}
+                </span>
+                
+                {/* Date Circle */}
+                <div className="flex flex-col items-center">
+                  <button className={`size-11 rounded-full flex items-center justify-center text-sm font-black transition-all border ${
+                    isToday 
+                    ? 'bg-gradient-primary border-transparent text-white shadow-[0_0_15px_rgba(233,30,99,0.4)] scale-110 z-10' 
+                    : 'bg-surface border-white/5 text-text-secondary'
+                  }`}>
+                    {date.getDate()}
+                  </button>
+                  
+                  {/* Completion Dot - Fixed position below */}
+                  <div className="h-4 flex items-center justify-center mt-1">
+                    {isCompleted && (
+                      <div className="size-1 bg-primary/80 rounded-full shadow-[0_0_4px_rgba(233,30,99,0.6)]"></div>
+                    )}
+                  </div>
+                </div>
               </div>
             );
           })}
@@ -81,13 +104,13 @@ const Dashboard: React.FC<DashboardProps> = ({ habits, insight, profileImage, on
           <div className="absolute top-0 right-0 size-48 bg-primary/10 blur-[60px] rounded-full translate-x-12 -translate-y-12"></div>
           <div className="flex flex-col gap-2 z-10">
             <div className="flex items-center gap-2 mb-1">
-              <span className="px-2 py-0.5 rounded-lg bg-accent/20 text-accent text-[9px] font-black uppercase tracking-[0.2em]">Live Pulse</span>
+              <span className="px-2 py-0.5 rounded-lg bg-accent/20 text-accent text-[9px] font-black uppercase tracking-[0.2em]">Pulso Real</span>
             </div>
             <h3 className="text-white text-3xl font-black leading-none tracking-tight">
-              {percentage}% <span className="text-xl opacity-50 font-medium tracking-normal">Complete</span>
+              {percentage}% <span className="text-xl opacity-50 font-medium tracking-normal">Completo</span>
             </h3>
             <p className="text-text-secondary text-sm font-medium mt-1">
-              You are crushing your <span className="text-white font-bold">{totalCount} goals</span> today.
+              Você completou <span className="text-white font-bold">{completedCount} de {totalCount} metas</span> hoje.
             </p>
           </div>
           
@@ -117,32 +140,15 @@ const Dashboard: React.FC<DashboardProps> = ({ habits, insight, profileImage, on
         </div>
       </div>
 
-      {/* AI Insight Section */}
-      {insight && (
-        <div className="px-6">
-          <div className="p-5 rounded-3xl bg-surface-light/50 backdrop-blur-md border border-white/5 shadow-xl relative overflow-hidden">
-            <div className="absolute -left-10 -bottom-10 size-40 bg-accent/5 blur-[50px] rounded-full"></div>
-            <div className="flex items-center gap-2 mb-3">
-              <div className="size-8 rounded-xl bg-primary/20 flex items-center justify-center">
-                <span className="material-symbols-outlined text-primary text-[20px] filled">auto_awesome</span>
-              </div>
-              <span className="text-white text-xs font-black uppercase tracking-[0.2em]">Gemini AI</span>
-            </div>
-            <p className="text-white text-base font-bold mb-2 leading-snug italic">"{insight.quote}"</p>
-            <p className="text-text-secondary text-xs leading-relaxed font-medium opacity-80">{insight.advice}</p>
-          </div>
-        </div>
-      )}
-
       {/* Habit List */}
       <div className="px-6 flex flex-col gap-4 pb-10">
         <div className="flex items-center justify-between">
-          <h3 className="text-lg font-bold text-white tracking-tight">Current Quests</h3>
-          <button className="text-[10px] font-black text-primary uppercase tracking-[0.2em] px-2 py-1 bg-primary/5 rounded-lg border border-primary/10">Manage</button>
+          <h3 className="text-lg font-bold text-white tracking-tight">Missões Atuais</h3>
+          <button className="text-[10px] font-black text-primary uppercase tracking-[0.2em] px-2 py-1 bg-primary/5 rounded-lg border border-primary/10">Gerenciar</button>
         </div>
         <div className="flex flex-col gap-3">
           {habits.map((habit) => {
-            const isCompleted = habit.completedDays.includes(today);
+            const isCompleted = habit.completedDays.includes(todayStr);
             return (
               <div 
                 key={habit.id}

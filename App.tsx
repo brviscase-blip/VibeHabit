@@ -1,8 +1,7 @@
 
-import React, { useState, useEffect, useRef } from 'react';
-import { Habit, DailyInsight, HabitCategory } from './types';
+import React, { useState, useRef } from 'react';
+import { Habit, HabitCategory } from './types';
 import { INITIAL_HABITS } from './constants';
-import { getHabitInsight } from './services/geminiService';
 import Dashboard from './components/Dashboard';
 import HabitDetail from './components/HabitDetail';
 import CreateHabit from './components/CreateHabit';
@@ -14,20 +13,11 @@ const App: React.FC = () => {
   const [habits, setHabits] = useState<Habit[]>(INITIAL_HABITS);
   const [currentScreen, setCurrentScreen] = useState<Screen>('dashboard');
   const [selectedHabitId, setSelectedHabitId] = useState<string | null>(null);
-  const [insight, setInsight] = useState<DailyInsight | null>(null);
   const [profileImage, setProfileImage] = useState<string>("https://picsum.photos/200");
   const [isCameraActive, setIsCameraActive] = useState(false);
   
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  useEffect(() => {
-    const fetchInsight = async () => {
-      const data = await getHabitInsight(habits);
-      setInsight(data);
-    };
-    fetchInsight();
-  }, [habits]);
 
   const toggleHabitCompletion = (id: string) => {
     const today = new Date().toISOString().split('T')[0];
@@ -86,7 +76,6 @@ const App: React.FC = () => {
         {currentScreen === 'dashboard' && (
           <Dashboard 
             habits={habits} 
-            insight={insight} 
             profileImage={profileImage}
             onToggle={toggleHabitCompletion}
             onHabitClick={(id) => { setSelectedHabitId(id); setCurrentScreen('detail'); }}

@@ -2,21 +2,17 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import { Habit, DailyInsight } from "../types";
 
-const API_KEY = process.env.API_KEY || '';
-
+/**
+ * Generates motivational insights and advice based on current habits using Gemini API.
+ * Follows strict Google GenAI SDK guidelines for initialization and content generation.
+ */
 export const getHabitInsight = async (habits: Habit[]): Promise<DailyInsight> => {
-  if (!API_KEY) {
-    return {
-      quote: "Success is the sum of small efforts, repeated day in and day out.",
-      advice: "Try to complete your most challenging habit first thing in the morning!"
-    };
-  }
-
-  const ai = new GoogleGenAI({ apiKey: API_KEY });
+  // Use direct initialization with process.env.API_KEY as per guidelines
+  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY as string });
   const modelName = 'gemini-3-flash-preview';
   
   const habitsList = habits.map(h => `${h.name} (${h.category})`).join(', ');
-  const prompt = `Based on these habits: ${habitsList}, provide a daily motivational quote and a short piece of advice for today.`;
+  const prompt = `Com base nestes hábitos: ${habitsList}, forneça uma frase motivacional diária e um conselho curto para hoje. Responda obrigatoriamente em Português do Brasil (PT-BR).`;
 
   try {
     const response = await ai.models.generateContent({
@@ -27,20 +23,33 @@ export const getHabitInsight = async (habits: Habit[]): Promise<DailyInsight> =>
         responseSchema: {
           type: Type.OBJECT,
           properties: {
-            quote: { type: Type.STRING },
-            advice: { type: Type.STRING },
+            quote: { 
+              type: Type.STRING,
+              description: 'A motivational quote in Portuguese (PT-BR).'
+            },
+            advice: { 
+              type: Type.STRING,
+              description: 'A short advice related to the habits in Portuguese (PT-BR).'
+            },
           },
           required: ["quote", "advice"]
         }
       }
     });
 
-    return JSON.parse(response.text || '{}');
+    // Directly access the .text property (not a method) as per guidelines
+    const text = response.text;
+    if (!text) {
+      throw new Error("Empty response from AI");
+    }
+    
+    return JSON.parse(text.trim());
   } catch (error) {
     console.error("Gemini Error:", error);
+    // Graceful fallback for API errors or missing API key
     return {
-      quote: "Believe you can and you're halfway there.",
-      advice: "Consistency is more important than intensity. Just keep showing up."
+      quote: "Acredite que você pode e você já está no meio do caminho.",
+      advice: "Consistência é mais importante que intensidade. Apenas continue aparecendo."
     };
   }
 };

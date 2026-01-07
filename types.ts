@@ -17,10 +17,11 @@ export interface Habit {
   currentValue?: number;
   completedDays: string[]; // ISO Dates
   color: string;
-  frequency: 'daily' | 'weekly' | 'monthly';
+  frequency: 'diário' | 'semanal' | 'mensal';
   reminderTime?: string;
 }
 
+// Added DailyInsight interface to fix import error
 export interface DailyInsight {
   quote: string;
   advice: string;
