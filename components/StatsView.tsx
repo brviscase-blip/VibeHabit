@@ -21,72 +21,72 @@ const StatsView: React.FC<StatsViewProps> = ({ habits, onBack }) => {
   const maxVal = Math.max(...weeklyData.map(d => d.val));
 
   return (
-    <div className="animate-fade-in flex flex-col gap-6">
-      <header className="sticky top-0 z-20 flex items-center justify-between px-6 py-5 bg-[#0f111a]/90 backdrop-blur-xl">
-        <button onClick={onBack} className="flex size-10 items-center justify-center rounded-[10px] bg-surface border border-white/5 shadow-xl">
-          <span className="material-symbols-outlined text-white text-xl">arrow_back</span>
+    <div className="animate-fade-in flex flex-col gap-5">
+      <header className="sticky top-0 z-20 flex items-center justify-between px-5 py-4 bg-[#0f111a]/90 backdrop-blur-xl">
+        <button onClick={onBack} className="flex size-9 items-center justify-center rounded-[9px] bg-surface border border-white/5 shadow-xl">
+          <span className="material-symbols-outlined text-white text-lg">arrow_back</span>
         </button>
-        <h1 className="text-lg font-black tracking-tight text-white uppercase tracking-[0.1em]">Estatísticas</h1>
-        <button className="flex size-10 items-center justify-center rounded-[10px] bg-surface border border-white/5 shadow-xl">
-          <span className="material-symbols-outlined text-white text-xl">calendar_month</span>
+        <h1 className="text-base font-black tracking-tight text-white uppercase tracking-[0.1em]">Estatísticas</h1>
+        <button className="flex size-9 items-center justify-center rounded-[9px] bg-surface border border-white/5 shadow-xl">
+          <span className="material-symbols-outlined text-white text-lg">calendar_month</span>
         </button>
       </header>
 
-      <div className="px-6 flex flex-col gap-6 pb-10">
-        {/* Performance Overview - Radius 28px -> 24px */}
-        <section className="grid grid-cols-2 gap-3">
-          <div className="bg-surface rounded-[24px] p-5 border border-white/5 relative overflow-hidden group">
-            <div className="absolute top-0 right-0 size-20 bg-primary/10 blur-3xl group-hover:bg-primary/20 transition-all"></div>
-            <span className="text-text-secondary text-[9px] font-black uppercase tracking-[0.15em] mb-3 block">Sequência Máxima</span>
-            <div className="flex items-baseline gap-1.5">
-              <span className="text-3xl font-black text-white">24</span>
-              <span className="text-[10px] text-text-secondary font-bold">DIAS</span>
+      <div className="px-5 flex flex-col gap-5 pb-8">
+        {/* Performance Overview */}
+        <section className="grid grid-cols-2 gap-2.5">
+          <div className="bg-surface rounded-[21px] p-4.5 border border-white/5 relative overflow-hidden group">
+            <div className="absolute top-0 right-0 size-16 bg-primary/10 blur-3xl group-hover:bg-primary/20 transition-all"></div>
+            <span className="text-text-secondary text-[8px] font-black uppercase tracking-[0.15em] mb-2.5 block">Sequência Máxima</span>
+            <div className="flex items-baseline gap-1">
+              <span className="text-2xl font-black text-white">24</span>
+              <span className="text-[9px] text-text-secondary font-bold">DIAS</span>
             </div>
-            <div className="mt-3 flex items-center gap-1">
-              <span className="material-symbols-outlined text-accent text-xs filled">trending_up</span>
-              <span className="text-[9px] font-bold text-accent">+3 este mês</span>
+            <div className="mt-2.5 flex items-center gap-1">
+              <span className="material-symbols-outlined text-accent text-[10px] filled">trending_up</span>
+              <span className="text-[8px] font-bold text-accent">+3 este mês</span>
             </div>
           </div>
-          <div className="bg-surface rounded-[24px] p-5 border border-white/5 relative overflow-hidden group">
-            <div className="absolute top-0 right-0 size-20 bg-accent/10 blur-3xl group-hover:bg-accent/20 transition-all"></div>
-            <span className="text-text-secondary text-[9px] font-black uppercase tracking-[0.15em] mb-3 block">Domínio</span>
-            <div className="flex items-baseline gap-1.5">
-              <span className="text-3xl font-black text-white">82</span>
-              <span className="text-[10px] text-text-secondary font-bold">%</span>
+          <div className="bg-surface rounded-[21px] p-4.5 border border-white/5 relative overflow-hidden group">
+            <div className="absolute top-0 right-0 size-16 bg-accent/10 blur-3xl group-hover:bg-accent/20 transition-all"></div>
+            <span className="text-text-secondary text-[8px] font-black uppercase tracking-[0.15em] mb-2.5 block">Domínio</span>
+            <div className="flex items-baseline gap-1">
+              <span className="text-2xl font-black text-white">82</span>
+              <span className="text-[9px] text-text-secondary font-bold">%</span>
             </div>
-            <div className="mt-3 flex items-center gap-1">
-              <span className="material-symbols-outlined text-primary text-xs filled">stars</span>
-              <span className="text-[9px] font-bold text-primary">Nível Elite</span>
+            <div className="mt-2.5 flex items-center gap-1">
+              <span className="material-symbols-outlined text-primary text-[10px] filled">stars</span>
+              <span className="text-[8px] font-bold text-primary">Nível Elite</span>
             </div>
           </div>
         </section>
 
-        {/* Weekly Chart - Radius 32px -> 27px */}
-        <section className="bg-surface rounded-[27px] p-6 border border-white/5 shadow-2xl relative overflow-hidden">
-          <div className="flex items-center justify-between mb-8">
+        {/* Weekly Chart */}
+        <section className="bg-surface rounded-[24px] p-5 border border-white/5 shadow-2xl relative overflow-hidden">
+          <div className="flex items-center justify-between mb-6">
             <div>
-              <h3 className="text-lg font-black text-white tracking-tight">Fluxo de Energia</h3>
-              <p className="text-text-secondary text-[10px] font-bold uppercase tracking-widest">Últimos 7 Dias</p>
+              <h3 className="text-base font-black text-white tracking-tight">Fluxo de Energia</h3>
+              <p className="text-text-secondary text-[9px] font-bold uppercase tracking-widest">Últimos 7 Dias</p>
             </div>
-            <span className="material-symbols-outlined text-primary text-xl">analytics</span>
+            <span className="material-symbols-outlined text-primary text-lg">analytics</span>
           </div>
 
-          <div className="flex items-end justify-between h-40 gap-2.5">
+          <div className="flex items-end justify-between h-36 gap-2">
             {weeklyData.map((d, i) => (
-              <div key={i} className="flex-1 flex flex-col items-center gap-3 group">
+              <div key={i} className="flex-1 flex flex-col items-center gap-2.5 group">
                 <div className="relative w-full flex items-end justify-center h-full">
                   <div 
-                    className={`w-3 rounded-full transition-all duration-700 shadow-lg ${d.val === maxVal ? 'bg-gradient-primary shadow-primary/30' : 'bg-white/5 group-hover:bg-white/10'}`}
+                    className={`w-2.5 rounded-full transition-all duration-700 shadow-md ${d.val === maxVal ? 'bg-gradient-primary shadow-primary/30' : 'bg-white/5 group-hover:bg-white/10'}`}
                     style={{ height: `${d.val}%` }}
                   >
                     {d.val === maxVal && (
-                      <div className="absolute -top-7 left-1/2 -translate-x-1/2 bg-white text-black text-[8px] font-black px-1.5 py-0.5 rounded-md">
+                      <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-white text-black text-[7px] font-black px-1 py-0.5 rounded-sm">
                         {d.val}%
                       </div>
                     )}
                   </div>
                 </div>
-                <span className={`text-[9px] font-black tracking-tighter ${d.val === maxVal ? 'text-white' : 'text-text-secondary/40'}`}>
+                <span className={`text-[8px] font-black tracking-tighter ${d.val === maxVal ? 'text-white' : 'text-text-secondary/40'}`}>
                   {d.day}
                 </span>
               </div>
@@ -94,25 +94,25 @@ const StatsView: React.FC<StatsViewProps> = ({ habits, onBack }) => {
           </div>
         </section>
 
-        {/* Quest Breakdown - Radius 24px -> 20px */}
-        <section className="flex flex-col gap-3">
-          <h3 className="text-base font-black text-white tracking-tight">Progresso de Habilidades</h3>
-          <div className="flex flex-col gap-2.5">
+        {/* Quest Breakdown */}
+        <section className="flex flex-col gap-2.5">
+          <h3 className="text-sm font-black text-white tracking-tight">Progresso de Habilidades</h3>
+          <div className="flex flex-col gap-2">
             {habits.slice(0, 4).map((h, idx) => {
               const progress = [90, 75, 60, 45][idx];
               return (
-                <div key={h.id} className="bg-surface rounded-[20px] p-4 border border-white/5 flex items-center gap-4 group">
-                  <div className="size-10 rounded-[10px] bg-[#0f111a] flex items-center justify-center text-primary border border-white/5">
-                    <span className="material-symbols-outlined text-xl filled">{h.category}</span>
+                <div key={h.id} className="bg-surface rounded-[18px] p-3.5 border border-white/5 flex items-center gap-3.5 group">
+                  <div className="size-9 rounded-[9px] bg-[#0f111a] flex items-center justify-center text-primary border border-white/5">
+                    <span className="material-symbols-outlined text-lg filled">{h.category}</span>
                   </div>
-                  <div className="flex-1 flex flex-col gap-1.5">
+                  <div className="flex-1 flex flex-col gap-1">
                     <div className="flex justify-between items-center">
-                      <span className="text-xs font-black text-white tracking-tight">{h.name}</span>
-                      <span className="text-[9px] font-black text-text-secondary tracking-widest">{progress}%</span>
+                      <span className="text-[11px] font-black text-white tracking-tight">{h.name}</span>
+                      <span className="text-[8px] font-black text-text-secondary tracking-widest">{progress}%</span>
                     </div>
-                    <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+                    <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
                       <div 
-                        className="h-full bg-gradient-primary rounded-full transition-all duration-1000 delay-500 shadow-[0_0_8px_rgba(233,30,99,0.3)]"
+                        className="h-full bg-gradient-primary rounded-full transition-all duration-1000 delay-500"
                         style={{ width: `${progress}%` }}
                       ></div>
                     </div>
