@@ -70,8 +70,9 @@ const App: React.FC = () => {
   const selectedHabit = habits.find(h => h.id === selectedHabitId);
 
   return (
-    <div className="flex justify-center min-h-screen bg-[#0f111a] font-sans overflow-x-hidden selection:bg-primary/30">
-      <div className="w-full max-w-md relative pb-24 shadow-2xl bg-[#0f111a] min-h-screen flex flex-col">
+    <div className="flex justify-center min-h-screen bg-[#0f111a] font-sans selection:bg-primary/30 overflow-x-hidden">
+      {/* Container principal: w-full para preencher margens e max-w-xl para desktop */}
+      <div className="w-full max-w-xl relative pb-28 shadow-2xl bg-[#0f111a] min-h-screen flex flex-col transition-all duration-300">
         
         {currentScreen === 'dashboard' && (
           <Dashboard 
@@ -130,37 +131,37 @@ const App: React.FC = () => {
           </div>
         )}
 
-        {/* Bottom Navigation */}
-        <nav className="fixed bottom-0 left-0 right-0 w-full max-w-md mx-auto bg-[#0f111a]/95 backdrop-blur-2xl border-t border-white/5 px-6 pb-8 pt-4 z-50">
+        {/* Bottom Navigation: w-full e max-w-xl para alinhar com o container */}
+        <nav className="fixed bottom-0 left-0 right-0 w-full max-w-xl mx-auto bg-[#0f111a]/95 backdrop-blur-2xl border-t border-white/5 px-8 pb-10 pt-4 z-50">
           <div className="flex justify-between items-center">
             <button 
               onClick={() => setCurrentScreen('dashboard')}
               className={`flex flex-col items-center transition-all ${currentScreen === 'dashboard' ? 'text-primary' : 'text-text-secondary'}`}
             >
-              <span className={`material-symbols-outlined ${currentScreen === 'dashboard' ? 'filled scale-110 drop-shadow-[0_0_8px_rgba(233,30,99,0.3)]' : ''}`}>home</span>
+              <span className={`material-symbols-outlined text-[28px] ${currentScreen === 'dashboard' ? 'filled scale-110 drop-shadow-[0_0_8px_rgba(233,30,99,0.3)]' : ''}`}>home</span>
               <span className="text-[10px] mt-1 font-bold uppercase tracking-widest">Home</span>
             </button>
             <button 
               onClick={() => setCurrentScreen('stats')}
               className={`flex flex-col items-center transition-all ${currentScreen === 'stats' ? 'text-primary' : 'text-text-secondary'}`}
             >
-              <span className={`material-symbols-outlined ${currentScreen === 'stats' ? 'filled scale-110' : ''}`}>bar_chart</span>
+              <span className={`material-symbols-outlined text-[28px] ${currentScreen === 'stats' ? 'filled scale-110' : ''}`}>bar_chart</span>
               <span className="text-[10px] mt-1 font-bold uppercase tracking-widest">Stats</span>
             </button>
-            <div className="relative -top-10">
+            <div className="relative -top-12">
               <button 
                 onClick={() => setCurrentScreen('create')}
-                className="flex items-center justify-center size-14 rounded-2xl bg-gradient-primary text-white shadow-[0_8px_24px_rgba(233,30,99,0.4)] active:scale-95 transition-all border-4 border-[#0f111a]"
+                className="flex items-center justify-center size-16 rounded-2xl bg-gradient-primary text-white shadow-[0_8px_32px_rgba(233,30,99,0.4)] active:scale-90 transition-all border-4 border-[#0f111a]"
               >
-                <span className="material-symbols-outlined text-3xl font-bold">add</span>
+                <span className="material-symbols-outlined text-4xl font-bold">add</span>
               </button>
             </div>
             <button className="flex flex-col items-center text-text-secondary hover:text-white transition-colors">
-              <span className="material-symbols-outlined">groups</span>
+              <span className="material-symbols-outlined text-[28px]">groups</span>
               <span className="text-[10px] mt-1 font-bold uppercase tracking-widest">Social</span>
             </button>
             <button className="flex flex-col items-center text-text-secondary hover:text-white transition-colors">
-              <span className="material-symbols-outlined">settings</span>
+              <span className="material-symbols-outlined text-[28px]">settings</span>
               <span className="text-[10px] mt-1 font-bold uppercase tracking-widest">Tools</span>
             </button>
           </div>
